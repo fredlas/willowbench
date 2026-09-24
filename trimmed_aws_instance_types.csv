@@ -1,0 +1,380 @@
+instance_type,vcpus,arch,memory_gb,storage_gb,storage_type,network,cost_per_hour_usd
+t3a.nano,2,x86_64,0.5,0,none,Up to 5 Gigabit,0.0047
+t3.nano,2,x86_64,0.5,0,none,Up to 5 Gigabit,0.0052
+t3a.micro,2,x86_64,1,0,none,Up to 5 Gigabit,0.0094
+t3.micro,2,x86_64,1,0,none,Up to 5 Gigabit,0.0104
+t3a.small,2,x86_64,2,0,none,Up to 5 Gigabit,0.0188
+t3.small,2,x86_64,2,0,none,Up to 5 Gigabit,0.0208
+t3a.medium,2,x86_64,4,0,none,Up to 5 Gigabit,0.0376
+t3.medium,2,x86_64,4,0,none,Up to 5 Gigabit,0.0416
+c7a.medium,1,x86_64,2,0,none,Up to 12.5 Gigabit,0.05152
+m7a.medium,1,x86_64,4,0,none,Up to 12.5 Gigabit,0.05796
+t3a.large,2,x86_64,8,0,none,Up to 5 Gigabit,0.0752
+r7a.medium,1,x86_64,8,0,none,Up to 12.5 Gigabit,0.07608
+c6a.large,2,x86_64,4,0,none,Up to 12.5 Gigabit,0.0765
+c5a.large,2,x86_64,4,0,none,Up to 10 Gigabit,0.077
+t3.large,2,x86_64,8,0,none,Up to 5 Gigabit,0.0832
+c5.large,2,x86_64,4,0,none,Up to 10 Gigabit,0.085
+c5ad.large,2,x86_64,4,75,ssd,Up to 10 Gigabit,0.086
+m5a.large,2,x86_64,8,0,none,Up to 10 Gigabit,0.086
+m6a.large,2,x86_64,8,0,none,Up to 12.5 Gigabit,0.0864
+c7i.large,2,x86_64,4,0,none,Up to 12.5 Gigabit,0.08925
+t2.large,2,x86_64,8,0,none,Low to Moderate,0.0928
+c5d.large,2,x86_64,4,50,ssd,Up to 10 Gigabit,0.096
+m5.large,2,x86_64,8,0,none,Up to 10 Gigabit,0.096
+m6i.large,2,x86_64,8,0,none,Up to 12.5 Gigabit,0.096
+c4.large,2,x86_64,3.75,0,none,Moderate,0.1
+m4.large,2,x86_64,8,0,none,Moderate,0.1
+c6id.large,2,x86_64,4,118,ssd,Up to 12.5 Gigabit,0.1008
+m7i.large,2,x86_64,8,0,none,Up to 12.5 Gigabit,0.1008
+r7a.large,2,x86_64,4,0,none,Up to 12.5 Gigabit,0.10264
+m5ad.large,2,x86_64,8,75,ssd,Up to 10 Gigabit,0.103
+m8i.large,2,x86_64,8,0,none,Up to 12.5 Gigabit,0.10584
+c5a.large,2,x86_64,5.3,0,none,Up to 25 Gigabit,0.108
+m5d.large,2,x86_64,8,75,ssd,Up to 10 Gigabit,0.113
+r5a.large,2,x86_64,16,0,none,Up to 10 Gigabit,0.113
+c6n.large,2,x86_64,4,0,none,Up to 25 Gigabit,0.1134
+r6a.large,2,x86_64,8,0,none,Up to 12.5 Gigabit,0.1134
+m7a.large,2,x86_64,8,0,none,Up to 12.5 Gigabit,0.11592
+m6id.large,2,x86_64,8,118,ssd,Up to 12.5 Gigabit,0.11865
+m5n.large,2,x86_64,8,0,none,Up to 25 Gigabit,0.119
+r5.large,2,x86_64,16,0,none,Up to 10 Gigabit,0.126
+r6i.large,2,x86_64,16,0,none,Up to 12.5 Gigabit,0.126
+r5ad.large,2,x86_64,16,75,ssd,Up to 10 Gigabit,0.131
+r7i.large,2,x86_64,16,0,none,Up to 12.5 Gigabit,0.1323
+m3.large,2,x86_64,7.5,32,ssd,Moderate,0.133
+r4.large,2,x86_64,15.3,0,none,Up to 10 Gigabit,0.133
+m5dn.large,2,x86_64,8,75,ssd,Up to 25 Gigabit,0.136
+r8m.large,2,x86_64,8,0,none,Up to 12.5 Gigabit,0.13892
+r6n.large,2,x86_64,16,0,none,Up to 25 Gigabit,0.13923
+r5d.large,2,x86_64,16,75,ssd,Up to 10 Gigabit,0.144
+r5b.large,2,x86_64,16,0,none,Up to 10 Gigabit,0.149
+r5n.large,2,x86_64,16,0,none,Up to 25 Gigabit,0.149
+t3a.xlarge,4,x86_64,16,0,none,Up to 5 Gigabit,0.1504
+r6id.large,2,x86_64,16,118,ssd,Up to 12.5 Gigabit,0.1512
+r7a.xlarge,4,x86_64,16,0,none,Up to 12.5 Gigabit,0.15215
+c5a.xlarge,4,x86_64,8,0,none,Up to 12.5 Gigabit,0.153
+c5a.xlarge,4,x86_64,8,0,none,Up to 10 Gigabit,0.154
+i3.large,2,x86_64,15.3,475,ssd,Up to 10 Gigabit,0.156
+m6idn.large,2,x86_64,8,118,ssd,Up to 25 Gigabit,0.15912
+m5n.large,2,x86_64,8,0,none,Up to 25 Gigabit,0.1652
+r3.large,2,x86_64,15,32,ssd,Moderate,0.166
+t3.xlarge,4,x86_64,16,0,none,Up to 5 Gigabit,0.1664
+r5dn.large,2,x86_64,16,75,ssd,Up to 25 Gigabit,0.167
+c5.xlarge,4,x86_64,8,0,none,Up to 10 Gigabit,0.17
+c6i.xlarge,4,x86_64,8,0,none,Up to 12.5 Gigabit,0.17
+c5ad.xlarge,4,x86_64,8,150,ssd,Up to 10 Gigabit,0.172
+i4i.large,2,x86_64,4,468,ssd,Up to 10 Gigabit,0.172
+m5a.xlarge,4,x86_64,16,0,none,Up to 10 Gigabit,0.172
+m6i.xlarge,4,x86_64,16,0,none,Up to 12.5 Gigabit,0.1728
+r6n.xlarge,2,x86_64,16,0,none,Up to 25 Gigabit,0.17433
+m1.xlarge,4,x86_64,7.5,840,hdd,Moderate,0.175
+c7i.xlarge,4,x86_64,8,0,none,Up to 12.5 Gigabit,0.1785
+t2.xlarge,4,x86_64,16,0,none,Moderate,0.1856
+r7iz.large,2,x86_64,16,0,none,Up to 12.5 Gigabit,0.186
+z1d.large,2,x86_64,16,75,ssd,Up to 10 Gigabit,0.186
+i7i.2xlarge,8,x86_64,32,450,ssd,Up to 10 Gigabit,0.1888
+c5d.xlarge,4,x86_64,8,100,ssd,Up to 10 Gigabit,0.192
+m5.xlarge,4,x86_64,16,0,none,Up to 10 Gigabit,0.192
+m6i.xlarge,4,x86_64,16,0,none,Up to 12.5 Gigabit,0.192
+r6idn.large,2,x86_64,16,118,ssd,Up to 25 Gigabit,0.19539
+c4.xlarge,4,x86_64,7.5,0,none,High,0.199
+m4.xlarge,4,x86_64,16,0,none,High,0.2
+c6id.xlarge,4,x86_64,8,237,ssd,Up to 12.5 Gigabit,0.2016
+m7i.xlarge,4,x86_64,16,0,none,Up to 12.5 Gigabit,0.2016
+g6f.xlarge,4,x86_64,16,100,ssd,Up to 10 Gigabit,0.202
+c7a.xlarge,4,x86_64,8,0,none,Up to 12.5 Gigabit,0.20528
+m5ad.xlarge,4,x86_64,16,150,ssd,Up to 10 Gigabit,0.206
+c3.xlarge,4,x86_64,7.5,80,ssd,Moderate,0.21
+m8i.xlarge,4,x86_64,16,0,none,Up to 12.5 Gigabit,0.21168
+c5n.xlarge,4,x86_64,10.5,0,none,Up to 25 Gigabit,0.216
+f5a.xlarge,4,x86_64,32,0,none,Up to 10 Gigabit,0.226
+i3en.large,2,x86_64,16,1250,ssd,Up to 25 Gigabit,0.226
+m5d.xlarge,4,x86_64,16,150,ssd,Up to 10 Gigabit,0.226
+c6n.xlarge,4,x86_64,8,0,none,Up to 50 Gigabit,0.2268
+r6a.xlarge,4,x86_64,32,0,none,Up to 12.5 Gigabit,0.2268
+inf1.xlarge,4,x86_64,8,0,none,Up to 25 Gigabit,0.228
+m7a.xlarge,4,x86_64,16,0,none,Up to 12.5 Gigabit,0.23104
+m6id.xlarge,4,x86_64,16,237,ssd,Up to 12.5 Gigabit,0.2373
+g6f.xlarge,4,x86_64,16,100,ssd,Up to 10 Gigabit,0.2375
+m5n.xlarge,4,x86_64,16,0,none,Up to 25 Gigabit,0.238
+m2.xlarge,2,x86_64,17.1,420,hdd,Moderate,0.245
+r5.xlarge,4,x86_64,32,0,none,Up to 10 Gigabit,0.252
+r6i.xlarge,4,x86_64,32,0,none,Up to 12.5 Gigabit,0.252
+i7i.large,2,x86_64,16,1250,ssd,Up to 25 Gigabit,0.2599
+r5ad.xlarge,4,x86_64,32,150,ssd,Up to 10 Gigabit,0.262
+r7i.xlarge,4,x86_64,32,0,none,Up to 12.5 Gigabit,0.2646
+m3.xlarge,4,x86_64,15,80,ssd,High,0.266
+r4.xlarge,4,x86_64,30.5,0,none,Up to 10 Gigabit,0.266
+m5dn.xlarge,4,x86_64,16,150,ssd,Up to 25 Gigabit,0.272
+r8i.xlarge,4,x86_64,32,0,none,Up to 15 Gigabit,0.27784
+m6n.xlarge,4,x86_64,16,0,none,Up to 30 Gigabit,0.27846
+r5d.xlarge,4,x86_64,32,150,ssd,Up to 10 Gigabit,0.288
+r5b.xlarge,4,x86_64,32,0,none,Up to 10 Gigabit,0.298
+r5n.xlarge,4,x86_64,32,0,none,Up to 25 Gigabit,0.298
+t3a.2xlarge,8,x86_64,32,0,none,Up to 5 Gigabit,0.3008
+r6id.xlarge,4,x86_64,32,237,ssd,Up to 12.5 Gigabit,0.3024
+r7a.xlarge,4,x86_64,32,0,none,Up to 12.5 Gigabit,0.3043
+c6a.2xlarge,8,x86_64,16,0,none,Up to 12.5 Gigabit,0.306
+c5a.2xlarge,8,x86_64,16,0,none,Up to 10 Gigabit,0.308
+i3.xlarge,4,x86_64,30.5,950,ssd,Up to 10 Gigabit,0.312
+m6idn.xlarge,4,x86_64,16,237,ssd,Up to 50 Gigabit,0.31824
+m5zn.xlarge,4,x86_64,16,0,none,Up to 25 Gigabit,0.3303
+t3.2xlarge,8,x86_64,32,0,none,Up to 5 Gigabit,0.3328
+r3.xlarge,4,x86_64,30.5,80,ssd,Moderate,0.333
+r5dn.xlarge,4,x86_64,32,150,ssd,Up to 25 Gigabit,0.334
+c5.2xlarge,8,x86_64,16,0,none,Up to 10 Gigabit,0.34
+c6i.2xlarge,8,x86_64,16,0,none,Up to 12.5 Gigabit,0.34
+i4i.xlarge,4,x86_64,32,937,ssd,Up to 10 Gigabit,0.343
+c5ad.2xlarge,8,x86_64,16,300,ssd,Up to 10 Gigabit,0.344
+m5a.2xlarge,8,x86_64,32,0,none,Up to 10 Gigabit,0.344
+m6a.2xlarge,8,x86_64,32,0,none,Up to 12.5 Gigabit,0.3456
+r6in.4xlarge,4,x86_64,32,0,none,Up to 30 Gigabit,0.34866
+m1.xlarge,4,x86_64,15,1680,hdd,High,0.35
+c7i.2xlarge,8,x86_64,16,0,none,Up to 12.5 Gigabit,0.357
+inf1.2xlarge,8,x86_64,16,0,none,Up to 25 Gigabit,0.362
+t2.2xlarge,8,x86_64,32,0,none,Moderate,0.3712
+r7iz.xlarge,4,x86_64,32,0,none,Up to 12.5 Gigabit,0.372
+z1d.xlarge,4,x86_64,32,150,ssd,Up to 10 Gigabit,0.372
+i7i.xlarge,4,x86_64,32,937,ssd,Up to 10 Gigabit,0.3775
+g4ad.xlarge,4,x86_64,16,150,ssd,Up to 10 Gigabit,0.37853
+c5d.2xlarge,8,x86_64,16,200,ssd,Up to 10 Gigabit,0.384
+m5.2xlarge,8,x86_64,32,0,none,Up to 10 Gigabit,0.384
+m6i.2xlarge,8,x86_64,32,0,none,Up to 12.5 Gigabit,0.384
+r6idn.xlarge,4,x86_64,32,237,ssd,Up to 50 Gigabit,0.39076
+c4.2xlarge,8,x86_64,15,0,none,High,0.398
+m4.2xlarge,8,x86_64,32,0,none,High,0.4
+c6id.2xlarge,8,x86_64,16,474,ssd,Up to 12.5 Gigabit,0.4032
+m7i.2xlarge,8,x86_64,32,0,none,Up to 12.5 Gigabit,0.4032
+r7a.2xlarge,8,x86_64,16,0,none,Up to 12.5 Gigabit,0.41056
+m5ad.2xlarge,8,x86_64,32,300,ssd,Up to 10 Gigabit,0.412
+c3.2xlarge,8,x86_64,15,160,ssd,High,0.42
+m8i.2xlarge,8,x86_64,32,0,none,Up to 15 Gigabit,0.42536
+c5n.2xlarge,8,x86_64,21,0,none,Up to 25 Gigabit,0.432
+i3en.xlarge,4,x86_64,32,2500,ssd,Up to 25 Gigabit,0.452
+m5d.2xlarge,8,x86_64,32,300,ssd,Up to 10 Gigabit,0.452
+r5a.2xlarge,8,x86_64,64,0,none,Up to 10 Gigabit,0.452
+c6in.2xlarge,8,x86_64,16,0,none,Up to 40 Gigabit,0.4536
+r6a.2xlarge,8,x86_64,32,0,none,Up to 12.5 Gigabit,0.4536
+m7a.2xlarge,8,x86_64,32,0,none,Up to 12.5 Gigabit,0.46368
+h1.2xlarge,8,x86_64,32,2000,hdd,Up to 10 Gigabit,0.468
+m6id.2xlarge,8,x86_64,32,474,ssd,Up to 12.5 Gigabit,0.4746
+g6f.2xlarge,8,x86_64,32,200,ssd,Up to 10 Gigabit,0.475
+m5n.2xlarge,8,x86_64,32,0,none,Up to 25 Gigabit,0.476
+m2.2xlarge,8,x86_64,68.4,850,hdd,Moderate,0.49
+r5.2xlarge,8,x86_64,64,0,none,Up to 10 Gigabit,0.504
+r6i.2xlarge,8,x86_64,64,0,none,Up to 12.5 Gigabit,0.504
+i7i.xlarge,4,x86_64,32,2500,ssd,Up to 25 Gigabit,0.5198
+c1.xlarge,8,x86_64,7,1680,hdd,High,0.52
+r5ad.2xlarge,8,x86_64,64,300,ssd,Up to 10 Gigabit,0.524
+g4dn.xlarge,4,x86_64,16,125,ssd,Up to 25 Gigabit,0.526
+r7i.2xlarge,8,x86_64,64,0,none,Up to 12.5 Gigabit,0.5292
+m3.2xlarge,8,x86_64,30,160,ssd,High,0.532
+r4.2xlarge,8,x86_64,61,0,none,Up to 10 Gigabit,0.532
+g4ad.2xlarge,8,x86_64,32,300,ssd,Up to 10 Gigabit,0.54117
+m5dn.2xlarge,8,x86_64,32,300,ssd,Up to 25 Gigabit,0.544
+r8i.2xlarge,8,x86_64,64,0,none,Up to 15 Gigabit,0.55568
+m6n.2xlarge,8,x86_64,32,0,none,Up to 40 Gigabit,0.55692
+r5b.2xlarge,8,x86_64,64,0,none,Up to 10 Gigabit,0.56
+r5d.2xlarge,8,x86_64,64,300,ssd,Up to 10 Gigabit,0.576
+r5n.2xlarge,8,x86_64,64,0,none,Up to 25 Gigabit,0.596
+r6id.2xlarge,8,x86_64,64,474,ssd,Up to 12.5 Gigabit,0.6048
+r7a.2xlarge,8,x86_64,64,0,none,Up to 12.5 Gigabit,0.608
+c6a.4xlarge,16,x86_64,32,0,none,Up to 12.5 Gigabit,0.612
+c5a.4xlarge,16,x86_64,32,0,none,Up to 10 Gigabit,0.616
+i3.2xlarge,8,x86_64,61,1900,ssd,Up to 10 Gigabit,0.624
+m6idn.2xlarge,8,x86_64,32,474,ssd,Up to 40 Gigabit,0.63648
+vt1.3xlarge,12,x86_64,24,0,none,3.12 Gigabit,0.65
+m5zn.2xlarge,8,x86_64,32,0,none,Up to 25 Gigabit,0.6607
+r5.2xlarge,8,x86_64,61,160,ssd,High,0.665
+r5dn.2xlarge,8,x86_64,64,300,ssd,Up to 25 Gigabit,0.668
+c5.4xlarge,16,x86_64,32,0,none,Up to 10 Gigabit,0.68
+c6i.4xlarge,16,x86_64,32,0,none,Up to 12.5 Gigabit,0.68
+i4i.2xlarge,8,x86_64,64,1875,ssd,Up to 12 Gigabit,0.686
+c5ad.4xlarge,16,x86_64,32,600,ssd,Up to 10 Gigabit,0.688
+m5a.4xlarge,16,x86_64,64,0,none,Up to 10 Gigabit,0.688
+m6a.4xlarge,16,x86_64,64,0,none,Up to 12.5 Gigabit,0.6912
+r6in.2xlarge,8,x86_64,64,0,none,Up to 40 Gigabit,0.69732
+c7i.4xlarge,16,x86_64,32,0,none,Up to 12.5 Gigabit,0.714
+r7i.2xlarge,8,x86_64,64,0,none,Up to 12.5 Gigabit,0.744
+z1d.2xlarge,8,x86_64,64,300,ssd,Up to 10 Gigabit,0.744
+c4dn.2xlarge,8,x86_64,32,225,ssd,Up to 25 Gigabit,0.752
+i7i.2xlarge,8,x86_64,64,1875,ssd,Up to 12 Gigabit,0.755
+inf2.xlarge,4,x86_64,64,0,none,Up to 15 Gigabit,0.7582
+c5d.4xlarge,16,x86_64,32,400,ssd,Up to 10 Gigabit,0.768
+m5.4xlarge,16,x86_64,64,0,none,Up to 10 Gigabit,0.768
+m6i.4xlarge,16,x86_64,64,0,none,Up to 12.5 Gigabit,0.768
+r6idn.2xlarge,8,x86_64,64,474,ssd,Up to 40 Gigabit,0.78156
+c4.4xlarge,16,x86_64,30,0,none,High,0.796
+m4.4xlarge,16,x86_64,64,0,none,High,0.8
+g6.xlarge,4,x86_64,16,250,ssd,Up to 10 Gigabit,0.8048
+c6id.4xlarge,16,x86_64,32,950,ssd,Up to 12.5 Gigabit,0.8064
+m7i.4xlarge,16,x86_64,64,0,none,Up to 12.5 Gigabit,0.8064
+r7a.4xlarge,16,x86_64,32,0,none,Up to 12.5 Gigabit,0.82112
+m5ad.4xlarge,16,x86_64,64,600,ssd,Up to 10 Gigabit,0.824
+x2iedn.xlarge,4,x86_64,128,118,ssd,Up to 25 Gigabit,0.83363
+x1e.xlarge,4,x86_64,122,120,ssd,Up to 10 Gigabit,0.834
+c3.4xlarge,16,x86_64,30,320,ssd,High,0.84
+m8i.4xlarge,16,x86_64,64,0,none,Up to 15 Gigabit,0.84672
+i2.xlarge,4,x86_64,30.5,800,ssd,Moderate,0.853
+c5n.4xlarge,16,x86_64,42,0,none,Up to 25 Gigabit,0.864
+g4ad.4xlarge,16,x86_64,64,600,ssd,Up to 10 Gigabit,0.867
+i3en.2xlarge,8,x86_64,64,5000,ssd,Up to 25 Gigabit,0.904
+m5d.4xlarge,16,x86_64,64,600,ssd,Up to 10 Gigabit,0.904
+r5a.4xlarge,16,x86_64,128,0,none,Up to 10 Gigabit,0.904
+c6in.4xlarge,16,x86_64,32,0,none,Up to 50 Gigabit,0.9072
+r6a.4xlarge,16,x86_64,128,0,none,Up to 12.5 Gigabit,0.9072
+m7a.4xlarge,16,x86_64,64,0,none,Up to 12.5 Gigabit,0.92736
+h1.4xlarge,16,x86_64,64,4000,hdd,Up to 10 Gigabit,0.936
+m6id.4xlarge,16,x86_64,64,950,ssd,Up to 12.5 Gigabit,0.9492
+g6f.4xlarge,16,x86_64,64,450,ssd,Up to 25 Gigabit,0.95
+m5n.4xlarge,16,x86_64,64,0,none,Up to 25 Gigabit,0.952
+g6.2xlarge,8,x86_64,32,450,ssd,Up to 10 Gigabit,0.9776
+m2.4xlarge,8,x86_64,68.4,1680,hdd,High,0.98
+m5zn.3xlarge,12,x86_64,48,0,none,Up to 25 Gigabit,0.991
+g5.xlarge,4,x86_64,16,250,ssd,Up to 10 Gigabit,1.006
+r5.4xlarge,16,x86_64,128,0,none,Up to 10 Gigabit,1.008
+r6i.4xlarge,16,x86_64,128,0,none,Up to 12.5 Gigabit,1.008
+i7i.2xlarge,8,x86_64,64,5000,ssd,Up to 25 Gigabit,1.0396
+r5ad.4xlarge,16,x86_64,128,600,ssd,Up to 10 Gigabit,1.048
+r7i.4xlarge,16,x86_64,128,0,none,Up to 12.5 Gigabit,1.0584
+r4.4xlarge,16,x86_64,122,0,none,Up to 10 Gigabit,1.064
+gr6f.4xlarge,16,x86_64,128,450,ssd,Up to 25 Gigabit,1.066
+m5dn.4xlarge,16,x86_64,64,600,ssd,Up to 25 Gigabit,1.088
+r8i.4xlarge,16,x86_64,128,0,none,Up to 15 Gigabit,1.11136
+m6in.4xlarge,16,x86_64,64,0,none,Up to 50 Gigabit,1.11364
+z1d.3xlarge,12,x86_64,96,450,ssd,Up to 10 Gigabit,1.116
+r5d.4xlarge,16,x86_64,128,600,ssd,Up to 10 Gigabit,1.152
+inf1.6xlarge,24,x86_64,48,0,none,25 Gigabit,1.18
+r5b.4xlarge,16,x86_64,128,0,none,Up to 10 Gigabit,1.192
+r5n.4xlarge,16,x86_64,128,0,none,Up to 25 Gigabit,1.192
+g4dn.4xlarge,16,x86_64,64,225,ssd,Up to 25 Gigabit,1.204
+r6id.4xlarge,16,x86_64,128,950,ssd,Up to 12.5 Gigabit,1.2096
+g5.2xlarge,8,x86_64,32,450,ssd,Up to 10 Gigabit,1.212
+r7a.4xlarge,16,x86_64,128,0,none,Up to 12.5 Gigabit,1.2172
+c6a.8xlarge,32,x86_64,64,0,none,12.5 Gigabit,1.224
+c5a.8xlarge,32,x86_64,64,0,none,10 Gigabit,1.232
+i3.4xlarge,16,x86_64,122,3800,ssd,Up to 10 Gigabit,1.248
+m6idn.4xlarge,16,x86_64,64,950,ssd,Up to 50 Gigabit,1.27296
+vt1.6xlarge,24,x86_64,48,0,none,6.25 Gigabit,1.3
+g6.4xlarge,16,x86_64,64,600,ssd,Up to 25 Gigabit,1.3232
+r3.4xlarge,16,x86_64,122,320,ssd,High,1.33
+r5dn.4xlarge,16,x86_64,128,600,ssd,Up to 25 Gigabit,1.336
+trn1.2xlarge,8,x86_64,32,474,ssd,Up to 12.5 Gigabit,1.34375
+c6i.8xlarge,32,x86_64,64,0,none,Up to 12.5 Gigabit,1.36
+i4i.4xlarge,16,x86_64,128,3750,ssd,Up to 25 Gigabit,1.373
+c5ad.8xlarge,32,x86_64,64,1200,ssd,10 Gigabit,1.376
+m5a.8xlarge,32,x86_64,128,0,none,Up to 10 Gigabit,1.376
+m6a.8xlarge,32,x86_64,128,0,none,Up to 12.5 Gigabit,1.3824
+r6in.4xlarge,16,x86_64,128,0,none,Up to 50 Gigabit,1.39464
+c7i.8xlarge,32,x86_64,64,0,none,Up to 12.5 Gigabit,1.428
+r7iz.4xlarge,16,x86_64,128,0,none,Up to 12.5 Gigabit,1.488
+l7i.4xlarge,16,x86_64,128,3750,ssd,Up to 25 Gigabit,1.5101
+c5.9xlarge,36,x86_64,72,0,none,12 Gigabit,1.53
+m5.8xlarge,32,x86_64,128,0,none,10 Gigabit,1.536
+m6i.8xlarge,32,x86_64,128,0,none,Up to 12.5 Gigabit,1.536
+gr6.4xlarge,16,x86_64,128,600,ssd,Up to 25 Gigabit,1.5392
+r6idn.4xlarge,16,x86_64,128,950,ssd,Up to 50 Gigabit,1.56312
+c4.8xlarge,36,x86_64,60,0,none,10 Gigabit,1.591
+c6id.8xlarge,32,x86_64,64,1900,ssd,12.5 Gigabit,1.6128
+m7i.8xlarge,32,x86_64,128,0,none,Up to 12.5 Gigabit,1.6128
+g5.4xlarge,16,x86_64,64,600,ssd,Up to 25 Gigabit,1.624
+c7a.8xlarge,32,x86_64,64,0,none,Up to 12.5 Gigabit,1.64224
+m5ad.8xlarge,32,x86_64,128,1200,ssd,Up to 10 Gigabit,1.648
+f1.2xlarge,8,x86_64,122,470,ssd,Up to 10 Gigabit,1.65
+x2ledn.xlarge,8,x86_64,256,237,ssd,Up to 25 Gigabit,1.66725
+x1e.2xlarge,8,x86_64,244,240,ssd,Up to 10 Gigabit,1.668
+x2iezn.2xlarge,8,x86_64,256,0,none,Up to 25 Gigabit,1.668
+c3.8xlarge,32,x86_64,60,640,ssd,10 Gigabit,1.68
+m8i.8xlarge,32,x86_64,128,0,none,15 Gigabit,1.69344
+i2.2xlarge,8,x86_64,61,1680,ssd,High,1.705
+c5d.8xlarge,32,x86_64,72,900,ssd,12 Gigabit,1.728
+g4ad.8xlarge,32,x86_64,128,1200,ssd,15 Gigabit,1.734
+m5d.8xlarge,32,x86_64,128,1200,ssd,10 Gigabit,1.808
+r5a.8xlarge,32,x86_64,256,0,none,Up to 10 Gigabit,1.808
+c6in.8xlarge,32,x86_64,64,0,none,50 Gigabit,1.8144
+r6a.8xlarge,32,x86_64,256,0,none,Up to 12.5 Gigabit,1.8144
+c5a.12xlarge,48,x86_64,96,0,none,18.75 Gigabit,1.836
+c5.12xlarge,48,x86_64,96,0,none,12 Gigabit,1.848
+m7a.8xlarge,32,x86_64,128,0,none,Up to 12.5 Gigabit,1.85472
+g6e.xlarge,4,x86_64,32,250,ssd,Up to 20 Gigabit,1.861
+m6id.8xlarge,32,x86_64,128,1900,ssd,12.5 Gigabit,1.8984
+m5n.8xlarge,32,x86_64,128,0,none,25 Gigabit,1.904
+c5n.9xlarge,36,x86_64,96,0,none,50 Gigabit,1.944
+inf2.8xlarge,32,x86_64,128,0,none,Up to 25 Gigabit,1.96706
+f2.6xlarge,24,x86_64,256,940,ssd,12.5 Gigabit,1.98
+m6n.8xlarge,32,x86_64,96,0,none,50 Gigabit,1.982
+m4.10xlarge,40,x86_64,160,0,none,10 Gigabit,2
+g6.8xlarge,32,x86_64,128,900,ssd,25 Gigabit,2.0144
+r5.8xlarge,32,x86_64,256,0,none,10 Gigabit,2.016
+r6i.8xlarge,32,x86_64,256,0,none,Up to 12.5 Gigabit,2.016
+c5ad.12xlarge,48,x86_64,96,1800,ssd,12 Gigabit,2.064
+r5ad.8xlarge,32,x86_64,256,1200,ssd,Up to 10 Gigabit,2.096
+g4dn.8xlarge,32,x86_64,128,900,ssd,50 Gigabit,2.176
+m5dn.8xlarge,32,x86_64,128,1200,ssd,25 Gigabit,2.176
+z1d.6xlarge,24,x86_64,192,900,ssd,12 Gigabit,2.232
+g6e.2xlarge,8,x86_64,64,450,ssd,Up to 20 Gigabit,2.24208
+c5d.12xlarge,48,x86_64,96,1800,ssd,12 Gigabit,2.304
+r5d.8xlarge,32,x86_64,256,1200,ssd,10 Gigabit,2.304
+c6id.12xlarge,48,x86_64,192,2850,ssd,18.75 Gigabit,2.4192
+r6id.8xlarge,32,x86_64,256,1900,ssd,12.5 Gigabit,2.4192
+gr6.8xlarge,32,x86_64,256,900,ssd,25 Gigabit,2.4464
+g5.8xlarge,32,x86_64,128,900,ssd,25 Gigabit,2.448
+m5ad.12xlarge,48,x86_64,192,1800,ssd,10 Gigabit,2.472
+m6idn.8xlarge,32,x86_64,128,1900,ssd,50 Gigabit,2.54592
+r3.8xlarge,32,x86_64,244,640,ssd,10 Gigabit,2.66
+r5dn.8xlarge,32,x86_64,256,1200,ssd,25 Gigabit,2.672
+m5d.12xlarge,48,x86_64,192,1800,ssd,12 Gigabit,2.712
+c5ad.16xlarge,64,x86_64,128,2400,ssd,20 Gigabit,2.752
+m6id.12xlarge,48,x86_64,192,2850,ssd,18.75 Gigabit,2.8476
+g6e.4xlarge,16,x86_64,128,600,ssd,20 Gigabit,3.00424
+r6idn.8xlarge,32,x86_64,256,1900,ssd,50 Gigabit,3.12624
+r5ad.12xlarge,48,x86_64,384,1800,ssd,10 Gigabit,3.144
+c6id.16xlarge,64,x86_64,128,3800,ssd,25 Gigabit,3.2256
+m5dn.12xlarge,48,x86_64,192,1800,ssd,50 Gigabit,3.264
+m5ad.16xlarge,64,x86_64,256,2400,ssd,12 Gigabit,3.296
+f1.4xlarge,16,x86_64,244,940,ssd,Up to 10 Gigabit,3.3
+x2ledn.4xlarge,16,x86_64,512,475,ssd,Up to 25 Gigabit,3.3345
+x1e.4xlarge,16,x86_64,488,480,ssd,Up to 10 Gigabit,3.336
+g6.16xlarge,64,x86_64,256,1880,ssd,25 Gigabit,3.3968
+l2.4xlarge,16,x86_64,122,3200,ssd,High,3.41
+c5d.18xlarge,72,x86_64,144,1800,ssd,25 Gigabit,3.456
+r5d.12xlarge,48,x86_64,384,1800,ssd,12 Gigabit,3.456
+g4ad.16xlarge,64,x86_64,256,2400,ssd,25 Gigabit,3.468
+m5d.16xlarge,64,x86_64,256,2400,ssd,20 Gigabit,3.616
+r6id.12xlarge,48,x86_64,384,2850,ssd,18.75 Gigabit,3.6288
+m6id.16xlarge,64,x86_64,256,3800,ssd,25 Gigabit,3.7968
+m6idn.12xlarge,48,x86_64,192,2850,ssd,75 Gigabit,3.81888
+g4dn.12xlarge,48,x86_64,192,900,ssd,50 Gigabit,3.912
+f2.12xlarge,48,x86_64,512,1880,ssd,25 Gigabit,3.96
+r5dn.12xlarge,48,x86_64,384,1800,ssd,50 Gigabit,4.008
+g5.16xlarge,64,x86_64,256,1900,ssd,25 Gigabit,4.096
+c5ad.24xlarge,96,x86_64,192,3800,ssd,20 Gigabit,4.128
+r5ad.16xlarge,64,x86_64,512,2400,ssd,12 Gigabit,4.192
+g4dn.16xlarge,64,x86_64,256,900,ssd,50 Gigabit,4.352
+m5dn.16xlarge,64,x86_64,256,2400,ssd,75 Gigabit,4.352
+z1d.12xlarge,48,x86_64,384,1800,ssd,25 Gigabit,4.464
+g6e.8xlarge,32,x86_64,256,900,ssd,25 Gigabit,4.52856
+g6.12xlarge,48,x86_64,192,3760,ssd,40 Gigabit,4.6016
+c5d.24xlarge,96,x86_64,192,3600,ssd,Up to 25 Gigabit,4.608
+r5d.16xlarge,64,x86_64,512,2400,ssd,20 Gigabit,4.608
+r6idn.12xlarge,48,x86_64,384,2850,ssd,75 Gigabit,4.68936
+r6id.16xlarge,64,x86_64,512,3800,ssd,25 Gigabit,4.8384
+m5ad.24xlarge,96,x86_64,384,3600,ssd,20 Gigabit,4.944
+m6idn.16xlarge,64,x86_64,256,3800,ssd,100 Gigabit,5.09184
+r5dn.16xlarge,64,x86_64,512,2400,ssd,75 Gigabit,5.344
+m5d.24xlarge,96,x86_64,384,3600,ssd,25 Gigabit,5.424
+g5.12xlarge,48,x86_64,192,3800,ssd,40 Gigabit,5.672
+r6idn.16xlarge,64,x86_64,512,3800,ssd,100 Gigabit,6.25248
+r5ad.24xlarge,96,x86_64,768,3600,ssd,20 Gigabit,6.288
+m5dn.24xlarge,96,x86_64,384,3600,ssd,100 Gigabit,6.528
+x1.16xlarge,64,x86_64,976,1920,ssd,10 Gigabit,6.669
+x2ldn.16xlarge,64,x86_64,1024,1900,ssd,50 Gigabit,6.669
+x2ledn.8xlarge,32,x86_64,1024,950,ssd,25 Gigabit,6.669
+x1e.6xlarge,24,x86_64,976,960,ssd,Up to 12.5 Gigabit,6.672
+g6.24xlarge,96,x86_64,384,3760,ssd,50 Gigabit,6.6752
+p5.48xlarge,16,x86_64,256,3800,ssd,100 Gigabit,6.88
+r5d.24xlarge,96,x86_64,768,3600,ssd,25 Gigabit,6.912
+g6e.16xlarge,64,x86_64,512,1900,ssd,55 Gigabit,7.57719
+r5dn.24xlarge,96,x86_64,768,3600,ssd,100 Gigabit,8.016
+g5.24xlarge,96,x86_64,384,3800,ssd,50 Gigabit,8.144

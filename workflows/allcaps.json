@@ -1,0 +1,6 @@
+{
+    "name": "allcaps",
+    "filter_string": "aaab",
+    "display_group": "whatever",
+    "description": "For minimal testing of task running. Capitalizes a text file."
+}

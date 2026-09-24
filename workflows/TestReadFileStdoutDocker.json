@@ -1,0 +1,6 @@
+{
+    "name": "TestReadFileStdoutDocker",
+    "filter_string": "aaap",
+    "display_group": "unusedTODOremove",
+    "description": "Test WDL read_int(), stdout(), etc"
+}

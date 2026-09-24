@@ -1,0 +1,167 @@
+
+add utils/cleanup_mongo_inflight.py to nightly crontab
+add to crontab:
+0 2 * * * cd /home/admin && mongodump --db=willow_database --out=temp_mongo_bkup && tar -czvf mongobkup_$(date +\%Y-\%m-\%d).tar.gz temp_mongo_bkup && rm -rf temp_mongo_bkup
+0 * * * * python3 /home/admin/willow/utils/cancel_stale_jobs.py >>/home/admin/cancelled_jobs.txt 2>/dev/null
+
+set flask, signed_url, mongo, anything else secrets (env?)
+
+
+
+
+
+
+
+
+
+
+AWS: (debian)
+sudo apt update
+sudo apt upgrade
+sudo apt install gunicorn python3-bcrypt python3-pymongo python3-lark python3-flask python3-wtforms python3-flaskext.wtf python3-boto3 cron python3-pylint-flask python3-pylint-common python3-stripe python3-email-validator
+
+
+sudo apt install gnupg curl build-essential openssl libssl-dev pkg-config
+curl -fsSL https://www.mongodb.org/static/pgp/server-8.0.asc | sudo gpg -o /usr/share/keyrings/mongodb-server-8.0.gpg  --dearmor
+echo "deb [ signed-by=/usr/share/keyrings/mongodb-server-8.0.gpg ] http://repo.mongodb.org/apt/debian bookworm/mongodb-org/8.0 main" | sudo tee /etc/apt/sources.list.d/mongodb-org-8.0.list
+sudo apt update
+sudo apt install mongodb-org
+sudo systemctl stop mongod
+sudo mongod --dbpath /var/lib/mongodb --noauth --fork --logpath /var/log/mongodb/mongod.log
+mongosh
+  use admin
+  db.createUser({user: "admin", pwd: "PICKAPASSWORDLOOKATMEHELLOOOOOOOOOOO", roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]})
+  exit
+sudo killall mongod
+sudo chown -R mongodb:mongodb /var/lib/mongodb
+sudo chown -R mongodb:mongodb /var/log/mongodb/
+sudo rm /var/lib/mongodb/mongod.lock
+sudo mongod -f /etc/mongod.conf --repair
+sudo systemctl enable mongod
+sudo systemctl start mongod
+sudo systemctl stop mongod
+sudo chown -R mongodb:mongodb /var/lib/mongodb # yes, again
+sudo systemctl start mongod
+mongosh -u admin -p --authenticationDatabase admin
+  use willow_database
+  db.createCollection("in_flight_email_verifications")
+  db.createCollection("jobs")
+  db.createCollection("users")
+  db.createCollection("tasks")
+  db.createCollection("customers")
+  db.jobs.createIndex({ customer_id: 1, last_activity_sse: -1, status: 1, workflow_name: 1 })
+
+
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+cargo build --release # in willow/core
+
+
+
+
+
+write these into ~/willow_fe_env on frontend machine (prod only - do random different ones for WILLOWs on dev, and for Stripe I think we will probably have test vs real keys, so do the test ones on dev):
+STRIPE_SECRET_KEY="thekey"
+STRIPE_WEBHOOK_SECRET="thesecret"
+STRIPE_PUBLISHABLE_KEY="thekey"
+WILLOW_FRONTEND_FLASK_SECRET_KEY="thekey"
+WILLOW_FRONTEND_NEW_CUSTOMER_SALT="thesalt"
+
+
+
+
+
+
+to set up AMI for outpost:
+sudo apt update
+sudo apt install apt-transport-https ca-certificates curl gnupg lsb-release
+curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt update
+sudo apt install docker-ce docker-ce-cli containerd.io
+
+sudo usermod -aG docker $USER
+newgrp docker
+docker run hello-world
+
+
+
+
+make sure to have S3 and STS "endpoints" set up in your prod VPC, or else you won't be able to access them with the no-public-IPv4 frontend/core machines
+
+
+
+
+make sure the core machine has an IAM role that gives it the PassRole permission, and also
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "sts:AssumeRole",
+            "Resource": "arn:aws:iam::*:role/WillowbenchTaskLauncherRole"
+        }
+    ]
+}
+
+
+
+
+
+on prod, write into /etc/logrotate.d/willow-core  :
+/home/admin/core.log {
+    daily
+    rotate 33
+    compress
+    delaycompress
+    missingok
+    notifempty
+    copytruncate
+}
+
+and into willow-fe:
+/home/admin/fe.log {
+    daily
+    rotate 33
+    compress
+    delaycompress
+    missingok
+    notifempty
+    copytruncate
+}
+
+and into willow-gunicorn-access:
+/home/admin/gunicorn_access.log {
+    daily
+    rotate 6
+    compress
+    delaycompress
+    missingok
+    notifempty
+    copytruncate
+}
+
+and into willow-gunicorn-error:
+/home/admin/gunicorn_error.log {
+    daily
+    rotate 6
+    compress
+    delaycompress
+    missingok
+    notifempty
+    copytruncate
+}
+
+
+
+
+
+
+
+
+
+
+on dev,
+echo "just in case you are doubting your sanity" >/home/admin/note_this_machine_is_dev
+
+on prod,
+echo "just in case you are doubting your sanity in prod" >/home/admin/note_this_machine_is_prod

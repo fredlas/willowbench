@@ -1,0 +1,26 @@
+{
+    "name": "TestCallCacheHalfway",
+    "filter_string": "aaay",
+    "display_group": "unusedTODOremove",
+    "description": "test successful caching when a later task fails",
+    "inputs": [
+        {
+            "type": "String",
+            "name": "s"
+        },
+        {
+            "type": "Boolean",
+            "name": "intentionally_fail"
+        }
+    ],
+    "outputs": [
+        {
+            "type": "File",
+            "name": "the_output"
+        },
+        {
+            "type": "Boolean",
+            "name": "did_we_want_to_fail"
+        }
+    ]
+}

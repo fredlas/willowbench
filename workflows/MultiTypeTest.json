@@ -1,0 +1,6 @@
+{
+    "name": "MultiTypeTest",
+    "filter_string": "aaal",
+    "display_group": "unusedTODOremove",
+    "description": "Tests all the input and output types."
+}

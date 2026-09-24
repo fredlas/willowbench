@@ -1,0 +1,6 @@
+{
+    "name": "FakeEndToEndTest",
+    "filter_string": "aaam",
+    "display_group": "unusedTODOremove",
+    "description": "for automated end-to-end testing in dev"
+}

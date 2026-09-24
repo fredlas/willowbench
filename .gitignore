@@ -1,0 +1,10 @@
+frontend/instance/
+frontend/__pycache__/
+the_widdler/__pycache__/
+core/Cargo.lock
+core/target/
+the_widdler/target/
+the_widdler/Cargo.lock
+frontend/willow_backend_port.txt
+.aider*
+*.kate-swp

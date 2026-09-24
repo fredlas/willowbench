@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Willowbench - Jobs{% endblock %}
+
+{% block content %}
+<h1>Jobs</h1>
+
+<form method="get" class="job-filter-form">
+    <div>
+        <label for="scope_filter"><strong>View:</strong></label>
+        <select name="scope_filter" id="scope_filter" class="styled-select">
+            <option value="user" {% if scope_filter == 'user' %}selected{% endif %}>My Jobs</option>
+            <option value="customer" {% if scope_filter == 'customer' %}selected{% endif %}>My Org's Jobs</option>
+        </select>
+    </div>
+
+    <div>
+        <label for="time_filter"><strong>Last Activity:</strong></label>
+        <select name="time_filter" id="time_filter" class="styled-select">
+            <option value="all" {% if time_filter == 'all' %}selected{% endif %}>All Jobs</option>
+            <option value="hour" {% if time_filter == 'hour' %}selected{% endif %}>Past Hour</option>
+            <option value="day" {% if time_filter == 'day' %}selected{% endif %}>Past Day</option>
+            <option value="week" {% if time_filter == 'week' %}selected{% endif %}>Past Week</option>
+            <option value="month" {% if time_filter == 'month' %}selected{% endif %}>Past Month</option>
+            <option value="year" {% if time_filter == 'year' %}selected{% endif %}>Past Year</option>
+        </select>
+    </div>
+
+    <div>
+        <label for="workflow_filter"><strong>Workflow Name:</strong></label>
+        <input type="text" name="workflow_filter" id="workflow_filter" value="{{ workflow_filter }}" class="styled-input">
+    </div>
+
+    <div>
+        <label for="status_filter"><strong>Status:</strong></label>
+        <select name="status_filter" id="status_filter" class="styled-select">
+            <option value="all" {% if status_filter == 'all' %}selected{% endif %}>All Jobs</option>
+            <option value="completed" {% if status_filter == 'completed' %}selected{% endif %}>Completed</option>
+            <option value="cancelled" {% if status_filter == 'cancelled' %}selected{% endif %}>Cancelled</option>
+            <option value="failed" {% if status_filter == 'failed' %}selected{% endif %}>Failed</option>
+            <option value="running" {% if status_filter == 'running' %}selected{% endif %}>Running</option>
+            <option value="pending" {% if status_filter == 'pending' %}selected{% endif %}>Pending</option>
+        </select>
+    </div>
+
+    <button class="cta-button" type="submit">Apply Filters</button>
+</form>
+
+<div class="jobs-list">
+    <ul>
+      {% for job in jobs %}
+        <li>
+          <a href="{{ url_for('job_page_handler', job_id=job.job_id) }}">
+            {% if job.nickname %}{{ job.nickname }}{% else %}{{ job.job_id }}{% endif %}
+          </a>
+          {% if scope_filter == 'customer' %} (launched by {{ job.useremail }}){% endif %}
+          <span title="{{ job.last_activity_exact }}">Last updated {{ job.last_activity_relative }}: <span style="color: {{ job.status_color }};">{{ job.status }}</span></span>
+        </li>
+      {% endfor %}
+    </ul>
+</div>
+{% endblock %}

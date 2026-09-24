@@ -1,0 +1,419 @@
+{% extends "base.html" %}
+
+{% block title %}Willowbench - Job Details{% endblock %}
+
+{% block content %}
+<h1>Job Details</h1>
+
+<div class="variable-list">
+  <div class="variable-bubble job-details-bubble">
+    <h2>Job Information</h2>
+
+    {% if not public_view %}
+      {% if job['status'].startswith('running') or job['status'] == 'pending' %}
+      <form method="POST" action="{{ url_for('cancel_job_handler', job_id=job['job_id']) }}" onsubmit="return confirm('Are you sure you want to cancel
+this job?');">
+          {{ form.hidden_tag() }}
+          <button type="submit" class="cta-button">Cancel Job</button>
+      </form>
+      {% endif %}
+
+      {% if job['status'] == 'failed' or job['status'] == 'cancelled' %}
+      <form method="POST" action="{{ url_for('resubmit_job_handler', job_id=job['job_id']) }}" onsubmit="return confirm('Are you sure you want to resubmit this job?');">
+          {{ form.hidden_tag() }}
+          <button type="submit" class="cta-button">Resubmit Job</button>
+      </form>
+      {% endif %}
+    {% endif %}
+
+    <p>Nickname: {% if public_view %}<span id="nickname-display">{{ job['nickname'] | default(job['job_id'], true) }}</span>{% else %}<a id="nickname-display" onclick="showNicknameEditForm()">{{ job['nickname'] | default(job['job_id'], true) }} 🖉</a>{% endif %}<br>
+       Workflow: <span>{{ job['workflow_name'] }}</span><br>
+       <span title="{{ started_exact }}">Started: {{ started_relative }}</span><br>
+       <span title="{{ last_activity_exact }}">Last update: {{ last_activity_relative }}</span><br>
+       Status: <span style="color: {{ status_color }};">{{ job['status'] }}</span>
+       {% if (job['status'] == 'failed' or job['status'] == 'cancelled') and status_details %}<br>Reason: {{ status_details }}{% endif %}
+       {% if job.get('error_details') %}
+         <br><button class="cta-btn" onclick="toggleDisplay('error-details')">Show/Hide Details</button>
+         <div class="log-content" id="error-details" style="display: none;">
+           <pre>{{ job.get('error_details') }}</pre>
+         </div>
+       {% endif %}
+    </p>
+    {% if not public_view %}
+    <div id="nickname-edit-form" style="display: none;">
+      <form id="update-nickname-form" method="POST" action="{{ url_for('job_nickname_handler', job_id=job['job_id']) }}">
+        {{ form.hidden_tag() }}
+        <input type="text" id="nickname-input" name="nickname" value="{{ job['nickname'] | default('', true) }}">
+        <button type="submit" class="cta-btn">Save</button>
+        <button type="button" class="cta-btn" onclick="cancelNicknameEdit()">Cancel</button>
+      </form>
+    </div>
+    {% endif %}
+
+    {% if public_view %}
+      {% if job['comment'] %}
+        <div id="comment-display">
+          Comment: <span id="current-comment">{{ job['comment'] }}</span>
+        </div>
+      {% endif %}
+    {% else %}
+      {% if job['comment'] %}
+      <div id="comment-display">
+        Comment: <span id="current-comment">{{ job['comment'] }}</span>
+        <button class="cta-button" onclick="showCommentEditForm()">Edit</button>
+      </div>
+      {% else %}
+      <div id="comment-display">
+        <button class="cta-button" onclick="showCommentEditForm()">Add Comment</button>
+      </div>
+      {% endif %}
+
+      <div id="comment-edit-form" style="display: none;"> {# This form is always present but hidden initially #}
+        <form id="update-comment-form" method="POST" action="{{ url_for('job_comment_handler', job_id=job['job_id']) }}">
+          {{ form.hidden_tag() }}
+          <textarea id="comment-textarea" name="comment" rows="4" cols="50">{{ job['comment'] | default('', true) }}</textarea><br>
+          <button type="submit" class="cta-btn">Save</button>
+          <button type="button" class="cta-btn" onclick="cancelCommentEdit()">Cancel</button>
+        </form>
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="variable-bubble">
+    <h2>Inputs</h2>
+    <ul>
+      {% for item in display_inputs %}
+          {% if item.type == 'File' %}
+          <li {% if item.type == 'ArrayFile' %}class="array-file-item"{% endif %}>
+            {% if item.value is none %}
+              <span class="io-name">{{ item.name }}:</span> <span class="io-value" style="color: gray;">unset</span>
+            {% else %}
+              <a href="{{ item.value }}">{{ item.name }}</a>
+              <div class="io-actions">
+                <button class="cta-button" onclick="downloadInput({% if public_view %}null{% else %}'{{ job['job_id'] }}'{% endif %}, '{{ item.name }}')">Download</button>
+                {% if item.value and item.value.lower().endswith(('.txt', '.csv', '.tsv', '.log', '.bed')) %}
+                <button class="cta-button" onclick="viewInput({% if public_view %}null{% else %}'{{ job['job_id'] }}'{% endif %}, '{{ item.name }}')">View in Browser</button>
+                {% endif %}
+              </div>
+              {# Create a unique ID for the content display div. Replace characters that might cause issues in IDs. #}
+              {% set inputs_content_id = 'display_inputs_' + item.name|replace('.', '_')|replace('-', '_')|replace('/', '_') %}
+            {% endif %}
+          </li>
+          <div class="log-content" id="{{ inputs_content_id }}" style="display: none;">
+            <pre>Loading...</pre>
+          </div>
+          {% elif item.type == 'ArrayFile' %}
+          <li {% if item.type == 'ArrayFile' %}class="array-file-item"{% endif %}>
+            {% if item.value is none or item.value|length == 0 %} {# Covers item.value being None or an empty list #}
+              <span class="io-name">{{ item.name }}:</span> <span class="io-value" style="color: gray;">unset</span>
+            {% else %}
+              <div class="io-name">{{ item.name }} ({{ item.value|length }} files)</div>
+              {% set array_id = 'inputs_array_' + item.name|replace('.', '_')|replace('-', '_')|replace('/', '_') %}
+              <div><button class="cta-btn" onclick="toggleDisplay('{{ array_id }}')">Show/Hide Files</button></div>
+              <div id="{{ array_id }}" style="display: none; padding-left: 20px;">
+                <ul>
+                  {% for file_uri in item.value %}
+                    <li>
+                      {% set filename = file_uri.split('/')[-1] %}
+                      <div><a href="{{ file_uri }}">{{ filename }}</a></div>
+                      <div class="io-actions">
+                        <button class="cta-button" onclick="downloadInput({% if public_view %}null{% else %}'{{ job['job_id'] }}'{% endif %}, '{{ item.name }}:{{ loop.index0 }}')">Download</button>
+                        {% if file_uri and file_uri.lower().endswith(('.txt', '.csv', '.tsv', '.log', '.bed')) %}
+                        <button class="cta-button" onclick="viewInput({% if public_view %}null{% else %}'{{ job['job_id'] }}'{% endif %}, '{{ item.name }}:{{ loop.index0 }}')">View in Browser</button>
+                        {% endif %}
+                      </div>
+                      {# Create a unique ID for the content display div. Must match logic in viewIO JS. #}
+                      {% set safe_k_for_id = item.name|replace('.', '_')|replace('-', '_')|replace('/', '_') %}
+                      {% set file_content_id = 'display_inputs_' ~ safe_k_for_id ~ '_' ~ loop.index0 %}
+                      <div class="log-content" id="{{ file_content_id }}" style="display: none;">
+                        <pre>Loading...</pre>
+                      </div>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% endif %}
+          </li>
+          {% elif item.type == 'Boolean' %}
+          <li {% if item.type == 'ArrayFile' %}class="array-file-item"{% endif %}>
+            <span class="io-name">{{ item.name }}:</span> <span class="io-value">
+              {% if item.value is none %}<span style="color: gray;">unset</span>
+              {% elif item.value|string|lower|first == 'y' or item.value|string|lower|first == 't' %}true{% else %}false{% endif %}
+            </span>
+          </li>
+          {% else %}
+          <li {% if item.type == 'ArrayFile' %}class="array-file-item"{% endif %}>
+            <span class="io-name">{{ item.name }}:</span> <span class="io-value">
+              {% if item.value is none %}<span style="color: gray;">unset</span>
+              {% else %}{{ item.value }}{% endif %}
+            </span>
+          </li>
+          {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div class="variable-bubble">
+    <h2>Outputs</h2>
+    <ul>
+      {% if job['status'] == 'completed' %}
+      {% for item in display_outputs %}
+          {% if item.type == 'File' %}
+          <li {% if item.type == 'ArrayFile' %}class="array-file-item"{% endif %}>
+            {% if item.value is none %}
+              <span class="io-name">{{ item.name }}:</span> <span class="io-value" style="color: gray;">unset</span>
+            {% else %}
+              <a href="{{ item.value }}">{{ item.name }}</a>
+              <div class="io-actions">
+                <button class="cta-button" onclick="downloadOutput({% if public_view %}null{% else %}'{{ job['job_id'] }}'{% endif %}, '{{ item.name }}')">Download</button>
+                {% if item.value and item.value.lower().endswith(('.txt', '.csv', '.tsv', '.log', '.bed')) %}
+                <button class="cta-button" onclick="viewOutput({% if public_view %}null{% else %}'{{ job['job_id'] }}'{% endif %}, '{{ item.name }}')">View in Browser</button>
+                {% endif %}
+              </div>
+              {# Create a unique ID for the content display div. Replace characters that might cause issues in IDs. #}
+              {% set outputs_content_id = 'display_outputs_' + item.name|replace('.', '_')|replace('-', '_')|replace('/', '_') %}
+            {% endif %}
+          </li>
+          <div class="log-content" id="{{ outputs_content_id }}" style="display: none;">
+            <pre>Loading...</pre>
+          </div>
+          {% elif item.type == 'ArrayFile' %}
+          <li {% if item.type == 'ArrayFile' %}class="array-file-item"{% endif %}>
+            {% if item.value is none or item.value|length == 0 %} {# Covers item.value being None or an empty list #}
+              <span class="io-name">{{ item.name }}:</span> <span class="io-value" style="color: gray;">unset</span>
+            {% else %}
+              <div class="io-name">{{ item.name }} ({{ item.value|length }} files)</div>
+              {% set array_id = 'outputs_array_' + item.name|replace('.', '_')|replace('-', '_')|replace('/', '_') %}
+              <div><button class="cta-btn" onclick="toggleDisplay('{{ array_id }}')">Show/Hide Files</button></div>
+              <div id="{{ array_id }}" style="display: none; padding-left: 20px;">
+                <ul>
+                  {% for file_uri in item.value %}
+                    <li>
+                      {% set filename = file_uri.split('/')[-1] %}
+                      <div><a href="{{ file_uri }}">{{ filename }}</a></div>
+                      <div class="io-actions">
+                        <button class="cta-button" onclick="downloadOutput({% if public_view %}null{% else %}'{{ job['job_id'] }}'{% endif %}, '{{ item.name }}:{{ loop.index0 }}')">Download</button>
+                        {% if file_uri and file_uri.lower().endswith(('.txt', '.csv', '.tsv', '.log', '.bed')) %}
+                        <button class="cta-button" onclick="viewOutput({% if public_view %}null{% else %}'{{ job['job_id'] }}'{% endif %}, '{{ item.name }}:{{ loop.index0 }}')">View in Browser</button>
+                        {% endif %}
+                      </div>
+                      {# Create a unique ID for the content display div. Must match logic in viewIO JS. #}
+                      {% set safe_k_for_id = item.name|replace('.', '_')|replace('-', '_')|replace('/', '_') %}
+                      {% set file_content_id = 'display_outputs_' ~ safe_k_for_id ~ '_' ~ loop.index0 %}
+                      <div class="log-content" id="{{ file_content_id }}" style="display: none;">
+                        <pre>Loading...</pre>
+                      </div>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% endif %}
+          </li>
+          {% elif item.type == 'Boolean' %}
+          <li {% if item.type == 'ArrayFile' %}class="array-file-item"{% endif %}>
+            <span class="io-name">{{ item.name }}:</span> <span class="io-value">
+              {% if item.value is none %}<span style="color: gray;">unset</span>
+              {% elif item.value|string|lower|first == 'y' or item.value|string|lower|first == 't' %}true{% else %}false{% endif %}
+            </span>
+          </li>
+          {% else %}
+          <li {% if item.type == 'ArrayFile' %}class="array-file-item"{% endif %}>
+            <span class="io-name">{{ item.name }}:</span> <span class="io-value">
+              {% if item.value is none %}<span style="color: gray;">unset</span>
+              {% else %}{{ item.value }}{% endif %}
+            </span>
+          </li>
+          {% endif %}
+      {% endfor %}
+      {% endif %}
+    </ul>
+  </div>
+
+  <div class="variable-bubble job-details-bubble"> {# Make task logs take full width #}
+    <h2>Task Logs</h2>
+    {% for wf_name, wf_log_list in processed_task_logs.items() %}
+      <div class="log-container">
+        <h4>{{ wf_name }}</h4>
+        {% for group in wf_log_list %}
+          {% if group.type == 'single' %}
+            <div class="log-section">
+              {% set task_name = group.task_name %}
+              {% set output_details = group.output_details %}
+              {% if output_details['stdout'] == 'cached' and output_details['stderr'] == 'cached' %}
+                <h4>{{ task_name }} (cached)</h4>
+              {% else %}
+                <h4>{{ task_name }}</h4>
+                <button class="cta-btn" onclick="toggleDisplay('log-{{ wf_name }}-{{ task_name }}-stdout')">Show/Hide stdout</button>
+                <div class="log-content" id="log-{{ wf_name }}-{{ task_name }}-stdout" style="display: none;">
+                  <pre>{{ output_details['stdout'] }}</pre>
+                </div>
+                <button class="cta-btn" onclick="toggleDisplay('log-{{ wf_name }}-{{ task_name }}-stderr')">Show/Hide stderr</button>
+                <div class="log-content" id="log-{{ wf_name }}-{{ task_name }}-stderr" style="display: none;">
+                  <pre>{{ output_details['stderr'] }}</pre>
+                </div>
+              {% endif %}
+            </div>
+          {% elif group.type == 'scatter' %}
+            <div class="log-section">
+              <button class="cta-btn" onclick="toggleDisplay('scatter-{{ wf_name }}-{{ group.group_key }}')">{{ group.display_name }} ({{ group.tasks|length }} shards)</button>
+              <div class="log-content" id="scatter-{{ wf_name }}-{{ group.group_key }}" style="display: none; padding-left: 20px;">
+                {% for task in group.tasks %}
+                  {% set task_name = task.task_name %}
+                  {% set output_details = task.output_details %}
+                  <div class="log-section">
+                    {% if output_details['stdout'] == 'cached' and output_details['stderr'] == 'cached' %}
+                      <h4>{{ task_name }} (cached)</h4>
+                    {% else %}
+                      <h4>{{ task_name }}</h4>
+                      <button class="cta-btn" onclick="toggleDisplay('log-{{ wf_name }}-{{ task_name }}-stdout')">Show/Hide stdout</button>
+                      <div class="log-content" id="log-{{ wf_name }}-{{ task_name }}-stdout" style="display: none;">
+                        <pre>{{ output_details['stdout'] }}</pre>
+                      </div>
+                      <button class="cta-btn" onclick="toggleDisplay('log-{{ wf_name }}-{{ task_name }}-stderr')">Show/Hide stderr</button>
+                      <div class="log-content" id="log-{{ wf_name }}-{{ task_name }}-stderr" style="display: none;">
+                        <pre>{{ output_details['stderr'] }}</pre>
+                      </div>
+                    {% endif %}
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+  function toggleDisplay(theId) {
+    const theContent = document.getElementById(theId);
+    if (theContent.style.display === 'none') {
+      theContent.style.display = 'block';
+    } else {
+      theContent.style.display = 'none';
+    }
+  }
+
+  function downloadIO(jobId, inputsOrOutputs, theKey)
+  {
+    // Construct the URL for the new download endpoint
+    const downloadUrl = (jobId === null) ? `/example/download/${inputsOrOutputs}/${encodeURIComponent(theKey)}`
+                                         : `/job/${jobId}/download/${inputsOrOutputs}/${encodeURIComponent(theKey)}`;
+
+    // Create a hidden anchor element
+    const link = document.createElement('a');
+    link.style.display = 'none'; // Keep it hidden
+
+    // Set the href to the download URL
+    link.href = downloadUrl;
+
+    // Set the download attribute. This signals the browser to download the resource.
+    // You can optionally provide a default filename here, but the server's
+    // Content-Disposition header will typically take precedence.
+    link.download = theKey; // Using theKey as a potential default filename
+
+    // Append the link to the body (required for Firefox to trigger the download)
+    document.body.appendChild(link);
+
+    // Programmatically click the link to trigger the download
+    link.click();
+
+    // Clean up: remove the link after a short delay
+    setTimeout(() => { document.body.removeChild(link); }, 0); // A small delay helps ensure the click is processed before removal
+  }
+  function downloadOutput(jobId, theKey) { downloadIO(jobId, 'outputs', theKey); }
+  function downloadInput(jobId, theKey) { downloadIO(jobId, 'inputs', theKey); }
+
+  function viewIO(jobId, inputsOrOutputs, theKey)
+  {
+    // Construct the URL for the new view endpoint
+    const viewUrl = (jobId === null) ? `/example/view/${inputsOrOutputs}/${encodeURIComponent(theKey)}`
+                                     : `/job/${jobId}/view/${inputsOrOutputs}/${encodeURIComponent(theKey)}`;
+
+    // Create the unique ID for the content div
+    // Must match the logic used in the Jinja template above.
+    const safeKey = theKey.replace(/\./g, '_').replace(/-/g, '_').replace(/\//g, '_').replace(/:/g, '_');
+    const ioContentId = `display_${inputsOrOutputs}_${safeKey}`;
+    const ioContentDiv = document.getElementById(ioContentId);
+
+    const isContentLoaded = ioContentDiv.getAttribute('data-loaded') === 'true';
+    if (!isContentLoaded) {
+      // Show loading indicator and the div
+      ioContentDiv.innerHTML = '<pre>Loading...</pre>';
+      ioContentDiv.style.display = 'block';
+
+      // Fetch the content
+      fetch(viewUrl)
+        .then(response => {
+          if (!response.ok) {
+            // Handle HTTP errors
+            // Try to read the response body for more details if available
+            return response.text().then(text => {
+              const errorDetail = text ? `\nDetails: ${text}` : '';
+              throw new Error(`HTTP error! status: ${response.status}${errorDetail}`);
+            });
+          }
+          return response.text();
+        })
+        .then(content => {
+          // Put content inside the pre tag, escaping HTML
+          ioContentDiv.innerHTML = `<pre>${escapeHTML(content)}</pre>`;
+          ioContentDiv.setAttribute('data-loaded', 'true'); // Mark as loaded
+          // The div is already visible from the loading state
+        })
+        .catch(error => {
+          // Display error message
+          ioContentDiv.innerHTML = `<pre style="color: red;">Error loading content: ${escapeHTML(error.message)}</pre>`;
+          ioContentDiv.setAttribute('data-loaded', 'true'); // Mark as attempted/failed
+          console.error('Error fetching job input/output content:', error);
+        });
+    } else {
+      // If content is already loaded, just toggle visibility
+      toggleDisplay(ioContentId);
+    }
+  }
+  function viewOutput(jobId, theKey) { viewIO(jobId, 'outputs', theKey); }
+  function viewInput(jobId, theKey) { viewIO(jobId, 'inputs', theKey); }
+
+  // Helper function to escape HTML characters in the fetched content
+  // This prevents the content from being interpreted as HTML/JS
+  function escapeHTML(str) {
+      const div = document.createElement('div');
+      div.appendChild(document.createTextNode(str));
+      return div.innerHTML;
+  }
+
+  function showCommentEditForm() {
+    document.getElementById('comment-display').style.display = 'none';
+    document.getElementById('comment-edit-form').style.display = 'block';
+    // Focus the textarea when the form is shown
+    document.getElementById('comment-textarea').focus();
+  }
+
+  function cancelCommentEdit() {
+    // Reset textarea content to current displayed comment
+    // Note: This requires fetching the current comment text again or storing it.
+    // For simplicity, we'll just hide the form. A page reload will show the
+    // original comment if the user cancels before saving.
+    // A more complex JS solution would store the original comment value.
+    document.getElementById('comment-edit-form').style.display = 'none';
+    document.getElementById('comment-display').style.display = 'block';
+  }
+
+  function showNicknameEditForm() {
+    document.getElementById('nickname-display').nextElementSibling.style.display = 'none'; // Hide the edit button
+    document.getElementById('nickname-edit-form').style.display = 'block';
+    // Focus the input when the form is shown
+    document.getElementById('nickname-input').focus();
+  }
+
+  function cancelNicknameEdit() {
+    document.getElementById('nickname-edit-form').style.display = 'none';
+    document.getElementById('nickname-display').nextElementSibling.style.display = 'inline'; // Show the edit button
+  }
+
+  // Removed the saveComment function as the form is now submitted directly by the browser
+
+</script>
+{% endblock %}

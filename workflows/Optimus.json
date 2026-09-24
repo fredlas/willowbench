@@ -1,0 +1,210 @@
+{
+    "name": "Optimus",
+    "filter_string": "aaax",
+    "display_group": "unusedTODOremove",
+    "description": "Alignment and transcriptome quantification",
+    "inputs": [
+        {
+            "type": "String",
+            "name": "cloud_provider"
+        },
+        {
+            "type": "String",
+            "name": "counting_mode"
+        },
+        {
+            "type": "ArrayFile",
+            "name": "r1_fastq"
+        },
+        {
+            "type": "ArrayFile",
+            "name": "r2_fastq"
+        },
+        {
+            "type": "ArrayFile",
+            "name": "i1_fastq"
+        },
+        {
+            "type": "String",
+            "name": "input_id"
+        },
+        {
+            "type": "String",
+            "name": "gex_nhash_id"
+        },
+        {
+            "type": "String",
+            "name": "output_bam_basename"
+        },
+        {
+            "type": "String",
+            "name": "input_name"
+        },
+        {
+            "type": "String",
+            "name": "input_id_metadata_field"
+        },
+        {
+            "type": "String",
+            "name": "input_name_metadata_field"
+        },
+        {
+            "type": "File",
+            "name": "tar_star_reference"
+        },
+        {
+            "type": "File",
+            "name": "annotations_gtf"
+        },
+        {
+            "type": "File",
+            "name": "mt_genes"
+        },
+        {
+            "type": "String",
+            "name": "soloMultiMappers"
+        },
+        {
+            "type": "Int",
+            "name": "gex_expected_cells"
+        },
+        {
+            "type": "Int",
+            "name": "tenx_chemistry_version"
+        },
+        {
+            "type": "File",
+            "name": "whitelist"
+        },
+        {
+            "type": "String",
+            "name": "read_struct"
+        },
+        {
+            "type": "Int",
+            "name": "emptydrops_lower"
+        },
+        {
+            "type": "Boolean",
+            "name": "force_no_check"
+        },
+        {
+            "type": "Boolean",
+            "name": "ignore_r1_read_length"
+        },
+        {
+            "type": "String",
+            "name": "star_strand_mode"
+        },
+        {
+            "type": "Boolean",
+            "name": "count_exons"
+        }
+    ],
+    "outputs": [
+        {
+            "type": "String",
+            "name": "pipeline_version_out"
+        },
+        {
+            "type": "File",
+            "name": "genomic_reference_version"
+        },
+        {
+            "type": "File",
+            "name": "cell_metrics"
+        },
+        {
+            "type": "File",
+            "name": "gene_metrics"
+        },
+        {
+            "type": "File",
+            "name": "cell_calls"
+        },
+        {
+            "type": "File",
+            "name": "library_metrics"
+        },
+        {
+            "type": "File",
+            "name": "bam"
+        },
+        {
+            "type": "File",
+            "name": "matrix"
+        },
+        {
+            "type": "File",
+            "name": "matrix_row_index"
+        },
+        {
+            "type": "File",
+            "name": "matrix_col_index"
+        },
+        {
+            "type": "File",
+            "name": "aligner_metrics"
+        },
+        {
+            "type": "File",
+            "name": "mtx_files"
+        },
+        {
+            "type": "File",
+            "name": "filtered_mtx_files"
+        },
+        {
+            "type": "File",
+            "name": "multimappers_EM_matrix"
+        },
+        {
+            "type": "File",
+            "name": "multimappers_Uniform_matrix"
+        },
+        {
+            "type": "File",
+            "name": "multimappers_Rescue_matrix"
+        },
+        {
+            "type": "File",
+            "name": "multimappers_PropUnique_matrix"
+        },
+        {
+            "type": "File",
+            "name": "h5ad_output_file"
+        },
+        {
+            "type": "File",
+            "name": "cell_barcodes_csv"
+        },
+        {
+            "type": "File",
+            "name": "checkpoint_file"
+        },
+        {
+            "type": "ArrayFile",
+            "name": "h5_array"
+        },
+        {
+            "type": "ArrayFile",
+            "name": "html_report_array"
+        },
+        {
+            "type": "File",
+            "name": "log"
+        },
+        {
+            "type": "ArrayFile",
+            "name": "metrics_csv_array"
+        },
+        {
+            "type": "String",
+            "name": "output_directory"
+        },
+        {
+            "type": "File",
+            "name": "summary_pdf"
+        }
+    ]
+}

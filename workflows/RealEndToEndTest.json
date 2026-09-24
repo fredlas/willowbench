@@ -1,0 +1,6 @@
+{
+    "name": "RealEndToEndTest",
+    "filter_string": "aaao",
+    "display_group": "unusedTODOremove",
+    "description": "for automated end-to-end testing in dev"
+}

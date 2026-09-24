@@ -1,0 +1,6 @@
+{
+    "name": "TestGlob",
+    "filter_string": "aaaq",
+    "display_group": "unusedTODOremove",
+    "description": "Testing the WDL glob() function"
+}

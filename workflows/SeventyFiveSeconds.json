@@ -1,0 +1,6 @@
+{
+    "name": "SeventyFiveSeconds",
+    "filter_string": "aaan",
+    "display_group": "unusedTODOremove",
+    "description": "Sleeps for 75 seconds (plus overhead)"
+}

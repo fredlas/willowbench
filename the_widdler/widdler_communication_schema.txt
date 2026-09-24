@@ -1,0 +1,200 @@
+The Widdler is run as a subprocess of the 'core' component, which is in Rust.
+
+The Widdler and core communicate by sending JSON objects to each other over stdout/stdin, one object
+per line (so no newlines in the JSON please!)
+
+This is not an RPC or request/response setup. The messages mostly don't get direct responses. The
+recipient just takes the appropriate action, or updates the appropriate state, or whatever.
+
+The basic flow: the core asks Widdler to do stuff with job state, and reports to Widdler
+outputs/results/status of tasks. Widdler asks core to do stuff with tasks, and reports about
+overall job state.
+
+Here are the possible messages, as the system is currently built.
+
+First, BOTH DIRECTIONS must always have a 'job_id' field and 'the_fn' field. All these messages
+are scoped to apply to a specific job(ha... not anymore, there is now the special one
+begin_shutdown and jobs_map_clean_safe_to_shutdown, but we keep the job_id requirement and just
+fill it with "NA").
+Anyways, NORMALLY, job_id identifies the message to its associated job.
+
+A "fully-qualified call-as name" of a task is like this: if your .wdl has workflow W and task T,
+then "call T as foo" would give "W.foo" here, and plain "call T" would give "W.T".
+
+
+WIDDLER->CORE
+================================================================================
+----------------------------------------
+the_fn = "jobs_map_clean_safe_to_shutdown"
+----------------------------------------
+Informs core that the Widdler has emptied out its jobs map, and so it should be safe for this
+whole core+Widdler instance to shut down.
+
+(job_id is meaningless here, so I'm just setting it to "NA")
+
+
+
+----------------------------------------
+the_fn = "run_task"
+----------------------------------------
+Run a new task.
+
+task_name: fully-qualified call-as name to be run. (This is just to help core with recordkeeping;
+           these names mean nothing to it).
+useremail: The useremail who owns this job.
+bash_cmds: base64(zlib.compress(String: the block of bash commands to be run within the Docker.
+                  Multiple commands separated by newline are fine, just like writing a script file.))
+willow_image_name: Our name for the image to start the task VM from. Can be "default" if the task
+                   doesn't specify. (This name is later combined with region to look up an AMI ID.)
+docker_image: The name of the Docker image to pull. Can be "none" to run the commands directly
+              on the machine.
+memory_requested: A string like "3.5 GiB", "3500 MiB", etc. Task must run with at least this much.
+cpu_requested: An int, treated as vCPU. Task must run with at least this much.
+files_to_localize: A map of files to be localized to the container before the command block can be
+                   run. Key is the local filepath to write to, value is the cloud URL to get from.
+files_to_cloudize: A map of files to be retrieved from the container after the command block has
+                   successfully run. Key is the fully-qualified variable name of the output file,
+                   value is the VM-local path to copy it from.
+optional_cloudizes: An array of fully-qualified variable names, expected to all be present as keys
+                    in files_to_cloudize. Any variable named here is ok to not exist - in which case
+                    cloudization should just skip it without complaint.
+task_inputs_non_file: A map of the task inputs not of File type. For the actual task's purposes,
+                      these are already written into bash_cmds, but we include them like this to
+                      make call caching easier.
+glob_requests: An array of strings, describing VM-local glob patterns (e.g. "glob/pattern.*.txt").
+               When the task completes, for each pattern we should find all matching files, upload
+               them to cloud, and include their local names AND cloudpaths in 'glob_result_lists'.
+file_contents_requests: An array of strings, naming VM-local filepaths. When the task completes,
+                        we should get the contents of each of these files to return in 'file_contents'.
+stdout_requested: boolean. Whether the stdout of bash_cmds should be returned in the cmd_stdout
+                  field of task_done.
+
+
+----------------------------------------
+the_fn = "job_failed"
+----------------------------------------
+Reporting overall failure of a job. The Widdler entirely forgets the job existed after sending this.
+
+Arguments:
+errmsg: A (hopefully) human-readable reason for the failure. This can be from an exception
+        propagated out from anywhere in The Widdler.
+
+
+
+----------------------------------------
+the_fn = "job_done"
+----------------------------------------
+Reporting overall success of a job. The Widdler entirely forgets the job existed after sending this.
+
+Arguments:
+outputs: A map from output name (variable names from the workflow output block) to value. (For File
+         type outputs, the value is the cloud URL the file can be gotten from).
+
+
+
+----------------------------------------
+the_fn = "size_query"
+----------------------------------------
+Requesting core to do a cloud storage API call(s) to get the size in bytes of cloudpaths.
+
+Arguments:
+cloudpaths: An array of the files we're interested in.
+
+
+
+----------------------------------------
+the_fn = "task_cache_store"
+----------------------------------------
+Giving core the outputs of a successful task run, for caching.
+
+Arguments:
+task_name: fully-qualified task call-as name to be run.
+outputs: All outputs of the task. A map from variable name (e.g. `File foo` is just `foo`) to value.
+         For File types, value is the actual S3 URL the file was stored at.
+
+
+
+CORE->WIDDLER
+================================================================================
+----------------------------------------
+the_fn = "begin_shutdown"
+----------------------------------------
+Widdler should shut down and report jobs_map_clean_safe_to_shutdown as soon as its jobs dict
+empties out.
+
+(job_id is meaningless here, so I'm just setting it to "NA")
+
+
+
+----------------------------------------
+the_fn = "start_job"
+----------------------------------------
+Deliver some overall workflow inputs supplied by the user. Responsible for making the Widdler start
+the job (if these are the first batch of inputs delivered for this job_id)
+
+Arguments:
+workflow_name: There should be a file named {workflow_name}.wdl in the workflows/ directory. The
+               template copied will be the one parsed from that file.
+useremail: The useremail who owns this job.
+cloudbucket: A cloud bucket name, like willowbench-tasks-CUSTOMERID-REGION, that intermediate and
+             output files will live in.
+inputs: A map from input names to values. For File inputs, the value is the cloud URL that the file
+        can be found at, once indicated available by the "files_available" message.
+
+
+
+----------------------------------------
+the_fn = "cancel_workflow"
+----------------------------------------
+Tells The Widdler to cancel an ongoing workflow. If any task is seen as running, The Widdler will
+issue a cancellation for it. The job is then removed from the jobs map.
+
+Arguments:
+(none)
+
+----------------------------------------
+the_fn = "files_available"
+----------------------------------------
+Notification that one or more files are available for localization.
+
+Arguments:
+cloudpaths: A map from fully-qualified variable name to the cloud path of the file now available.
+
+----------------------------------------
+the_fn = "task_done"
+----------------------------------------
+Notification that a requested command execution has finished (whether successful or not).
+
+Arguments:
+task_call_as: The fully-qualified call-as name of the task.
+status: OK (caps matter) if successful, anything else if not.
+file_contents: A map from VM-local filenames (as passed in file_contents_requests) to a string
+               holding the contents of that file.
+cmd_stdout: The stdout of the task. Won't be present if not requested by 'stdout_requested'.
+glob_result_lists: A map from a glob pattern (as provided in 'glob_requests') to an array
+                   of the cloudpaths resulting from that glob (may be an empty array).
+cloudpaths: A map from fully-qualified variable name to the cloud path of the file now available
+            (i.e. produced by the task).
+
+
+----------------------------------------
+the_fn = "size_response"
+----------------------------------------
+Response to size_query.
+
+Arguments:
+sizes: A map from cloudpath to size in bytes.
+
+
+
+----------------------------------------
+the_fn = "task_cache_hit"
+----------------------------------------
+Receiving the cached results of a previous task run, that should allow a currently pending task to
+be skipped.
+
+Arguments:
+task_name: fully-qualified task call-as name of the cached task.
+outputs: All outputs of the task. A map from variable name (e.g. `File foo` is just `foo`) to value.
+         For File types, value is the actual S3 URL the file was stored at.
+         The keys are fully-qualified variable names.

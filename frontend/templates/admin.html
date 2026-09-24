@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% from "macros.html" import render_field %}
+
+{% block title %}Admin Controls{% endblock %}
+
+{% block content %}
+    <h2>Admin Info</h2>
+    <b>Admin Useremail:</b> {{ useremail }}<br>
+    <b>Willowbench Customer ID:</b> {{ customer_id }}<br>
+    <b>AWS Region:</b> {{ region }}<br>
+    <b>Billing Type:</b> {{ billing_type }}
+
+    <h2>Admin Actions</h2>
+
+    <h3>Invite New Users</h3>
+    <p>Enter email addresses below to send invitations to create accounts under Customer ID {{ customer_id }}.</p>
+
+    <form method="POST">
+        {{ invite_form.csrf_token }}
+        <div id="email-fields-container">
+            {% for email_field in invite_form.emails %}
+                <div class="email-field-wrapper">
+                    {{ render_field(email_field.form.email, placeholder="Enter email address") }}
+                </div>
+            {% endfor %}
+        </div>
+        <button type="button" id="add-email-field" style="display: none;">Add another email</button> {# Hidden initially, shown by JS #}
+        <br>
+        {{ invite_form.submit() }}
+    </form>
+
+    <h3>Billing</h3>
+    {% if billing_type == 'subscription' %}
+        <p>Your account is on a monthly subscription plan.</p>
+        {# Form to trigger Stripe Customer Portal for subscription updates #}
+        <form method="POST" action="{{ url_for('update_subscription_billing_handler') }}">
+            {{ csrf_token() }}
+            <button type="submit">Update Subscription Billing Info</button>
+        </form>
+    {% elif billing_type == 'credits' %}
+        <p>Your account uses a credits balance.</p>
+        <p>Current Balance: {{ credits_balance }} credits</p>
+        {# Form to trigger Stripe Checkout for purchasing credits #}
+        <form method="POST" action="{{ url_for('purchase_credits_handler') }}">
+            {{ purchase_credits_form.csrf_token }}
+            {{ render_field(purchase_credits_form.amount) }} {# Render the select field for amount #}
+            {{ purchase_credits_form.submit() }} {# Render the submit button #}
+        </form>
+    {% else %}
+        <p>Billing information not available or unknown billing type.</p>
+    {% endif %}
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.getElementById('email-fields-container');
+            const addButton = document.getElementById('add-email-field');
+
+            function addEmailField() {
+                const index = container.children.length;
+                const newFieldWrapper = document.createElement('div');
+                newFieldWrapper.classList.add('email-field-wrapper');
+
+                // Create the input field dynamically
+                const input = document.createElement('input');
+                input.setAttribute('type', 'text');
+                input.setAttribute('id', `emails-${index}-email`);
+                input.setAttribute('name', `emails-${index}-email`);
+                input.setAttribute('placeholder', 'Enter email address');
+                // Add classes for styling if needed
+                // input.classList.add('form-control');
+
+                // Add event listener to the new input field
+                input.addEventListener('input', handleInput);
+
+                newFieldWrapper.appendChild(input);
+                container.appendChild(newFieldWrapper);
+
+                // Show the add button if it's hidden
+                addButton.style.display = 'inline-block';
+            }
+
+            function handleInput(event) {
+                const input = event.target;
+                const wrapper = input.closest('.email-field-wrapper');
+                const isLastField = wrapper === container.lastElementChild;
+
+                if (isLastField && input.value.trim() !== '') {
+                    // Add a new field if the last one is being typed into
+                    addEmailField();
+                }
+            }
+
+            // Add event listeners to existing fields (rendered by Flask)
+            container.querySelectorAll('.email-field-wrapper input[type="text"]').forEach(input => {
+                input.addEventListener('input', handleInput);
+            });
+
+            // Add button click handler
+            addButton.addEventListener('click', function() {
+                 // Add a new field only if the last one is not empty
+                 const lastInput = container.lastElementChild.querySelector('input[type="text"]');
+                 if (lastInput && lastInput.value.trim() !== '') {
+                     addEmailField();
+                 } else if (!lastInput) { // Case for initial load with no fields (though min_entries=1 prevents this)
+                     addEmailField();
+                 }
+            });
+
+            // Initial check to show/hide add button if there's already text in the first field
+             const firstInput = container.querySelector('.email-field-wrapper input[type="text"]');
+             if (firstInput && firstInput.value.trim() !== '') {
+                 addButton.style.display = 'inline-block';
+             } else if (firstInput) {
+                 // If the first field is empty, ensure there's at least one blank field
+                 // and hide the button until typing starts.
+                 addButton.style.display = 'none';
+             } else {
+                 // If no fields were rendered initially (e.g., min_entries=0), add one
+                 // addEmailField(); // min_entries=1 handles this now
+                 addButton.style.display = 'none';
+             }
+
+        });
+    </script>
+
+{% endblock %}

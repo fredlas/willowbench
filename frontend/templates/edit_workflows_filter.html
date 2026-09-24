@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Willowbench - Edit Library Filter{% endblock %}
+
+{% block content %}
+<h1>Edit Workflow Library Filter</h1>
+
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <button type="submit" class="btn btn-primary" style="margin-bottom: 20px;">Save Filter</button>
+
+    <div class="workflow-list">
+        {% for category, workflows in grouped_workflows.items() %}
+        {% for workflow in workflows %}
+            <div class="workflow-bubble-link workflow-filter-card">
+                <input
+                    type="checkbox"
+                    name="selected_workflows"
+                    value="{{ workflow.name }}"
+                    {% if workflow.name in current_filter %}checked{% endif %}
+                    class="workflow-filter-checkbox"
+                >
+                <div class="workflow-bubble-content">
+                    <h3>{{ workflow.name }}</h3>
+                    <p>{{ workflow.description }}</p>
+                </div>
+            </div>
+        {% endfor %}
+        {% endfor %}
+    </div>
+</form>
+
+{% endblock %}

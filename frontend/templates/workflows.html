@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Willowbench - Workflow Library{% endblock %}
+
+{% block content %}
+<h1>Workflow Library</h1>
+
+<div class="workflow-list">
+    {% for category, workflows in grouped_workflows.items() %}
+    {% for workflow in workflows %}
+      <a href="/workflows/{{ workflow.name }}" class="workflow-bubble-link">
+        <h3>{{ workflow.name }}</h3>
+        <p>{{ workflow.description }}</p>
+      </a>
+    {% endfor %}
+    {% endfor %}
+</div>
+
+{% endblock %}

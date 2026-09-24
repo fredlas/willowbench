@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}Willowbench - Job not found{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: center; align-items: center;">
+  <h1>Job not found.</h1>
+  <p>Could not find job {{ job_id }} for user {{ useremail }}</p>
+  <img src="static/images/weeping_willow.png" alt="Literally weeping Willow"/>
+</div>
+{% endblock %}

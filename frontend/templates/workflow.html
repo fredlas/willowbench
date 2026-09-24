@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}Willowbench - Launch Job{% endblock %}
+
+{% block content %}
+<h1>Launch {{ workflow_name }} Run</h1>
+
+<form id="paramsSubmit" method="POST" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+    {% if error %}
+        <div class="error-message">{{ error }}</div>
+    {% endif %}
+    {% for field in form if field.name != 'csrf_token' and field.name != 'job_id' %}
+        <div class="form-field">
+            {% if field.type == 'FileField' %}
+                <label for="{{ field.name }}">{{ field.name }}:</label>
+                <input type="text" name="{{ field.name }}" placeholder="Enter S3 URL (e.g., s3://bucket/path)" class="styled-input" id="{{ field.name }}">
+            {% elif field.type == 'BooleanField' %}
+                {{ field.label() }}
+                {{ field(class="styled-checkbox") }}
+            {% else %}
+                {{ field.label() }}
+                {{ field(class="styled-input") }}
+            {% endif %}
+            {% for error in field.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </div>
+    {% endfor %}
+    <br>
+    <button type="submit" class="cta-button">Submit</button>
+</form>
+<div id="message"></div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Handle form submission
+        document.getElementById('paramsSubmit').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const form = event.target;
+            const submitButton = form.querySelector('button[type="submit"]');
+            const formData = new FormData(form);
+
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    const jobId = data.job_id;
+                    if (jobId) {
+                        window.location.href = `/job/${jobId}`;
+                    } else {
+                        document.getElementById('message').innerText = 'Job submitted successfully, but JobID not found for redirection.';
+                        submitButton.disabled = true;
+                    }
+                } else {
+                    const errorData = await response.text();
+                    // Instead of setting message here, we'll let the Flask redirect handle it
+                    // document.getElementById('message').innerText = `Job submission failed: ${errorData}`;
+                    // Redirect with the error as a query parameter
+                    window.location.href = `${form.action}?error=${encodeURIComponent(errorData)}`;
+                }
+            } catch (error) {
+                // Redirect with a generic error message
+                window.location.href = `${form.action}?error=${encodeURIComponent('An error occurred during the request.' + error)}`;
+            }
+        });
+    });
+
+    // Function to get query parameters from the URL
+    function getQueryParam(name) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(name);
+    }
+
+    // Display error message from URL query parameter if present
+    document.addEventListener('DOMContentLoaded', function() {
+        const errorParam = getQueryParam('error');
+        if (errorParam) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error-message';
+            errorDiv.textContent = decodeURIComponent(errorParam);
+            const formElement = document.getElementById('paramsSubmit');
+            if (formElement) {
+                formElement.insertBefore(errorDiv, formElement.firstChild);
+                // Remove the error parameter from the URL for cleaner UI on refresh
+                const url = new URL(window.location.href);
+                url.searchParams.delete('error');
+                window.history.replaceState({}, '', url);
+            }
+        }
+    });
+</script>
+{% endblock %}

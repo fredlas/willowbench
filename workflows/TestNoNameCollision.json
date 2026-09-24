@@ -1,0 +1,18 @@
+{
+    "name": "TestNoNameCollision",
+    "filter_string": "aaaz",
+    "display_group": "unusedTODOremove",
+    "description": "test not colliding with the stuff in /willow_system",
+    "inputs": [
+        {
+            "type": "File",
+            "name": "the_input_file"
+        }
+    ],
+    "outputs": [
+        {
+            "type": "File",
+            "name": "the_output"
+        }
+    ]
+}

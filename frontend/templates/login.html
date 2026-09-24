@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+    <h2>Login</h2>
+    {% if just_logged_out %}<p>You have been logged out.</p>{% endif %}
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.useremail.label }}<br>
+            {{ form.useremail(type='email', size=20, class='styled-input') }}<br>
+            {% for error in form.useremail.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.password.label }}<br>
+            {{ form.password(size=20, class='styled-input') }}<br>
+            {% for error in form.password.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <p style="color: {{ 'green' if category == 'success' else 'red' }};">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <br><br>
+    <a href="/reset_password">Forgot password?</a>
+{% endblock %}

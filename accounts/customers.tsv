@@ -1,0 +1,16 @@
+test customer do not use	101024	test2@example.com	credits	us-west-1
+hi there, LLC.	101030	test@example.com	subscription	us-east-1
+First Real Test Co	101041	fred.e.douglas1231@gmail.com	subscription	us-east-1
+Another New Test Co	101052	fred.e.douglas1231@gmail.com	subscription	us-east-1
+Yet Another Test Co	101063	fred.e.douglas1231@gmail.com	subscription	us-east-1
+Still Another Test Co	101075	fred.e.douglas1231@gmail.com	subscription	us-east-1
+This One Will Work Inc	101086	fred.e.douglas1231@gmail.com	subscription	us-east-1
+Ok Test Now Updated Inc	101097	fred.e.douglas1231@gmail.com	subscription	us-east-1
+Ok More Idempotent LLC	101100	fred.e.douglas1231@gmail.com	subscription	us-east-1
+I have a good feeling LLC	101111	fred.e.douglas1231@gmail.com	subscription	us-east-1
+Maybe This Time Inc.	101122	fred.e.douglas1231@gmail.com	subscription	us-east-1
+A little Further Inc	101133	fred.e.douglas1231@gmail.com	subscription	us-east-1
+Now Mongo CustomrId Will be Int LLC	101144	fred.e.douglas1231@gmail.com	subscription	us-east-1
+Now With More Permissions LLC	101155	fred.e.douglas1231@gmail.com	subscription	us-east-1
+Actually Deployed Inc	101166	fred.e.douglas1231@gmail.com	subscription	us-east-1
+More VPC Room LLC	101177	fred.e.douglas1231@gmail.com	subscription	us-east-1

@@ -1,0 +1,557 @@
+/* --- Global Styles & Variables --- */
+:root {
+    --primary-blue: #87CEEB;    /* Sky Blue */
+    --secondary-blue: #AADDEE;  /* Light Blue #ADD8E6 */
+    --dark-blue: #4682B4;     /* Steel Blue */
+    --darker-blue: #2A548A;
+    --water-blue: #76C0E8; /* #85D1FA */
+    --transparent: rgba(1, 1, 1, 0);
+    --sonic-blue: #0588FF;
+    --softer-green: #79DB8C;
+    --light-bg: #F0FCFF;     /* F0F8FF Alice Blue */
+    --text-color: #333;
+    --heading-color: #2c3e50; /* Darker blue-gray */
+    --white: #FFFFFF;
+    --soft-shadow: 0 6px 20px rgba(70, 130, 180, 0.1); /* Softer, more diffused shadow */
+    --border-radius: 15px; /* Rounded corners */
+    --subtle-border: 1px solid rgba(70, 130, 180, 0.1); /* Subtle blue border */
+}
+
+body {
+    margin: 0;
+    font-family: 'Nunito', sans-serif;
+    background-color: var(--light-bg);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+h1, h2, h3 {
+    color: var(--heading-color);
+    margin-bottom: 0.8em;
+    font-weight: 700;
+}
+
+h1 {
+    font-size: 2.8em;
+    line-height: 1.2;
+}
+
+h2 {
+    font-size: 1.8em;
+}
+
+h3 {
+    font-size: 1.4em;
+}
+
+p {
+    margin-bottom: 0.8em;
+}
+
+a {
+    color: var(--dark-blue);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--primary-blue);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* --- Header & Navigation --- */
+header {
+    background: var(--white);
+    padding: 15px 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid rgba(70, 130, 180, 0.1);
+}
+
+header nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+    font-size: 1.5em;
+    color: var(--heading-color);
+}
+.logo-link:hover {
+    color: var(--dark-blue);
+}
+
+.logo {
+    height: 45px;
+    margin-right: 10px;
+}
+
+header nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+header nav ul li {
+    margin-left: 25px;
+}
+
+header nav ul li a {
+    font-weight: 700;
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+header nav ul li a:hover {
+    color: var(--sonic-blue);
+}
+
+
+/* --- Main Content Sections --- */
+main {
+    padding-top: 40px;
+    padding-bottom: 60px;
+}
+
+.cta-button {
+    display: inline-block;
+    background: radial-gradient(#fdfdfd, #edf7fc 10%, #e6f7ff 40%, var(--water-blue));
+    color: var(--darker-blue);
+    padding: 9px 19px;
+    border-radius: 30px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 1.0em;
+    box-shadow: 0 4px 10px rgba(135, 206, 235, 0.4);
+    transition: background 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; /* Add border-color to transition */
+    cursor: pointer; /* For button elements */
+    border: 1px solid rgba(1, 1, 1, 0);
+}
+
+.cta-button:hover {
+    box-shadow: 0 6px 15px rgba(135, 206, 235, 0.5);
+    background: radial-gradient(var(--white), #edf7fc 40%, var(--water-blue));
+}
+
+/* General layout for lists of bubbles/cards */
+.variable-list,
+.workflow-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Spacing between bubbles */
+    margin-top: 20px;
+}
+
+/* Styling for individual bubbles/cards */
+.variable-bubble {
+    background-color: var(--white);
+    border: var(--subtle-border);
+    border-radius: var(--border-radius);
+    box-shadow: var(--soft-shadow);
+    padding: 20px;
+    margin: 0;
+    flex: 1 1 300px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.workflow-bubble-link {
+    display: block;
+    flex: 0 0 250px;
+    box-sizing: border-box;
+    text-decoration: none;
+    color: inherit;
+    background-color: var(--white);
+    border: var(--subtle-border);
+    border-radius: var(--border-radius);
+    box-shadow: var(--soft-shadow);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.workflow-bubble-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(70, 130, 180, 0.25);
+}
+
+
+.variable-bubble h3,
+.workflow-bubble-link h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: var(--dark-blue);
+    font-size: 1.2em;
+}
+
+.variable-bubble h2,
+.workflow-bubble-link h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: var(--dark-blue);
+    font-size: 1.6em;
+}
+
+.variable-bubble p,
+.workflow-bubble-link p {
+    margin-bottom: 0.5em;
+    font-size: 0.9em;
+    color: var(--text-color);
+}
+
+.variable-bubble ul,
+.workflow-bubble-link ul {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 0 0;
+}
+
+.variable-bubble ul li,
+.workflow-bubble-link ul li {
+    margin-bottom: 5px;
+    font-size: 0.9em;
+    display: flex; /* Make list item a flex container */
+    align-items: center; /* Vertically align items */
+}
+
+/* For ArrayFile items, we want vertical stacking, not a flex row */
+.variable-bubble ul li.array-file-item {
+    display: block;
+}
+
+/* Style for input/output variable names */
+.variable-bubble ul li a {
+    font-size: 1.1em; /* Slightly larger */
+    /* Allow the link to take up available space */
+    flex-grow: 1;
+    /* Prevent the link from shrinking */
+    flex-shrink: 0;
+    /* Add some margin to the right of the link */
+    margin-right: 10px;
+}
+
+/* Add horizontal dividers between list items in variable bubbles */
+.variable-bubble ul div + li {
+    border-top: 2px dotted rgba(70, 130, 180, 0.3); /* Subtle blue border */
+    padding-top: 13px;
+    margin-top: 13px;
+}
+
+/* Container for download/view buttons */
+.io-actions {
+    margin-left: auto; /* Push this container to the right */
+    display: flex; /* Make this a flex container to align buttons */
+    gap: 10px; /* Space between buttons */
+    flex-shrink: 0; /* Prevent the buttons container from shrinking */
+}
+
+/* Styles for non-file inputs/outputs, to match the a elements of file input names */
+.variable-bubble ul li .io-name {
+    font-size: 1.1em;
+    flex-grow: 1;
+    flex-shrink: 0;
+    margin-right: 10px;
+}
+
+.variable-bubble ul li .io-value {
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+
+.workflow-filter-card {
+    display: flex; /* Use flexbox to align checkbox and content */
+    align-items: flex-start; /* Align items to the top */
+    gap: 10px; /* Space between checkbox and text */
+}
+
+.workflow-filter-checkbox {
+    margin-top: 5px; /* Adjust alignment with the title */
+}
+
+.workflow-bubble-content {
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+.workflow-bubble-content h2 h3 {
+    margin-top: 0;
+}
+
+.job-details-bubble {
+    flex-basis: 100%;
+}
+
+
+.log-container {
+    margin-top: 20px;
+}
+
+.log-section {
+    margin-bottom: 15px;
+    padding: 15px;
+    background-color: rgba(135, 206, 235, 0.08);
+    border: var(--subtle-border);
+    border-radius: 8px;
+}
+
+.log-section h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: var(--heading-color);
+    font-size: 1em;
+}
+
+.log-content {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: rgba(135, 206, 235, 0.15);
+    border-radius: 5px;
+    overflow-x: auto; /* Add scroll for long lines */
+}
+
+/* Specific styling for log-content when used for inputs/outputs */
+.variable-bubble ul .log-content {
+    margin-top: 10px; /* Space above the content */
+    margin-bottom: 20px; /* Space below the content */
+    /* Add a subtle border below the content to separate items */
+    border-bottom: 1px dotted rgba(70, 130, 180, 0.3);
+    padding-bottom: 15px; /* Space between content and border */
+}
+
+
+.log-content pre {
+    margin: 0;
+    white-space: pre-wrap; /* Wrap long lines */
+    word-wrap: break-word;
+    font-size: 0.85em;
+    color: #333;
+}
+
+.styled-select,
+.styled-input {
+    background-color: var(--white);
+    color: var(--text-color);
+    border: var(--subtle-border);
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.9em;
+    box-shadow: 0 2px 5px rgba(70, 130, 180, 0.1);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box;
+}
+
+.styled-select {
+    cursor: pointer;
+
+    /* Remove default system appearance for better consistency */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    /* custom arrow */
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10"><path fill="%23ffffff" d="M0 3l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 22px; /* Make space for the arrow */
+}
+
+.styled-select:hover,
+.styled-input:hover {
+    border-color: var(--primary-blue);
+    box-shadow: 0 3px 8px rgba(70, 130, 180, 0.2); /* Slightly stronger shadow on hover */
+}
+
+.styled-select:focus,
+.styled-input:focus {
+    outline: none;
+    border-color: var(--primary-blue); /* Add a focus indicator */
+    box-shadow: 0 0 0 3px rgba(135, 206, 235, 0.3); /* Softer focus ring */
+}
+
+.job-filter-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.job-filter-form > div {
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Space between label and input/select */
+    flex: 1 1 200px; /* Allow divs to grow/shrink, preferred basis 200px */
+}
+
+.job-filter-form label {
+    font-size: 0.9em;
+    color: var(--heading-color);
+    margin-bottom: 0;
+    flex-shrink: 0; /* Prevent label from shrinking */
+}
+
+.job-filter-form .styled-select,
+.job-filter-form .styled-input {
+    flex-grow: 1; /* Allow input/select to grow within the div */
+    flex-shrink: 1; /* Allow input/select to shrink within the div */
+    min-width: 80px; /* Minimum width for the input/select */
+}
+
+.job-filter-form .cta-button {
+    margin-top: 0;
+    flex-shrink: 0; /* Prevent button from shrinking */
+}
+
+
+#paramsSubmit {
+    margin-top: 20px;
+}
+
+.form-field {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 15px;
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--soft-shadow);
+}
+
+.form-field label {
+    flex: 0 0 200px;
+    font-weight: 700;
+    margin-right: 15px;
+    text-align: left;
+    color: var(--heading-color);
+}
+
+.form-field .styled-input {
+    flex-grow: 1;
+    min-width: 200px;
+}
+
+#paramsSubmit > div {
+    margin-bottom: 15px;
+    padding: 15px;
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--soft-shadow);
+}
+
+#paramsSubmit label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 700;
+    color: var(--heading-color);
+}
+
+#paramsSubmit input[type="text"],
+#paramsSubmit input[type="file"] {
+    width: calc(100% - 24px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1em;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+#paramsSubmit input[type="text"]:focus,
+#paramsSubmit input[type="file"]:focus {
+    border-color: var(--primary-blue);
+    outline: none;
+    box-shadow: 0 0 5px rgba(135, 206, 235, 0.5);
+}
+
+#paramsSubmit button[type="submit"] {
+    /* Inherits .cta-button styles */
+    margin-top: 20px;
+}
+
+.error-message {
+    color: red;
+    font-weight: bold;
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #ffebeb; /* Light red background */
+    border: 1px solid #ffcccc;
+    border-radius: 8px;
+}
+
+/* Specific styles for Jobs List */
+.jobs-list ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.jobs-list li {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--soft-shadow);
+    padding: 15px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.1em;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Add hover effect to the list item itself */
+.jobs-list li:hover {
+    box-shadow: 0 6px 15px rgba(70, 130, 180, 0.25);
+}
+
+.jobs-list li a {
+    font-weight: 700;
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 768px) {
+    h1 { font-size: 2.2em; }
+
+    header nav {
+        flex-direction: column;
+        align-items: center;
+    }
+    header nav ul {
+        margin-top: 15px;
+        flex-wrap: wrap; /* Allow wrapping on small screens */
+        justify-content: center;
+    }
+    header nav ul li {
+        margin: 5px 10px; /* Adjust spacing */
+    }
+
+    .variable-bubble,
+    .workflow-bubble-link { /* Apply flex basis to the link */
+        flex-basis: 100%; /* Stack bubbles on small screens */
+        width: auto;
+    }
+}

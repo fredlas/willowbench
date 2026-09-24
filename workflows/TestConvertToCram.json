@@ -1,0 +1,6 @@
+{
+    "name": "TestConvertToCram",
+    "filter_string": "aaas",
+    "display_group": "unusedTODOremove",
+    "description": "test a first individual component of the Broad whole genome pipeline"
+}

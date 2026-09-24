@@ -1,0 +1,27 @@
+make changes in the www directory; commit and push
+
+sign into AWS, navigate to S3, and then the bucket named www.willowbench.bio
+
+(for each directory that has changed/new files)
+  navigate to the directory
+  click upload
+  drag and drop any changed or new files in that directory
+    *IMPORTANT*: if you upload an HTML file with no extension, e.g. "about", "contact", then:
+    expand the "Properties" menu at the bottom of the upload page
+    click "Add metadata" at the bottom
+    type "System defined", Key "Content-Type", Value "text/html" (text/html won't be a suggestion, but it's correct)
+
+
+navigate to AWS Cloudfront. select what should be the only "Distribution" (its ID is E14LG3CWMWUJLY in case there are others)
+
+go to the Invalidations tab, and "Create invalidation"
+
+add object paths as instructed. e.g.
+/index.html
+/about
+/images/casey.jpg
+
+
+then click "create invalidation"
+
+wait until the invalidation status moves on from "In progress" to "Completed", wait another several seconds, then visit willowbench.bio in incognito to check that the changes are live.

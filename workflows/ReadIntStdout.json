@@ -1,0 +1,22 @@
+{
+    "name": "ReadIntStdout",
+    "filter_string": "aaav",
+    "display_group": "unusedTODOremove",
+    "description": "tests ArrayInt input, and read_int(stdout())",
+    "inputs": [
+        {
+            "type": "ArrayInt",
+            "name": "in"
+        }
+    ],
+    "outputs": [
+        {
+            "type": "Int",
+            "name": "the_sum"
+        },
+        {
+            "type": "ArrayFile",
+            "name": "out_file_twice"
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Account Settings{% endblock %}
+
+{% block content %}
+    <h2>Account Info</h2>
+    <b>Useremail:</b> {{ useremail }}<br>
+    <b>Willowbench Customer ID:</b> {{ customer_id }}<br>
+    <b>AWS Region:</b> {{ region }}
+
+    <h2>Account Actions</h2>
+    <a href="/reset_password">Change Password</a><br>
+    <a href="/edit_library_filter">Change Workflow Library Filter</a>
+{% endblock %}

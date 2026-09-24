@@ -1,0 +1,6 @@
+{
+    "name": "TestSize",
+    "filter_string": "aaar",
+    "display_group": "unusedTODOremove",
+    "description": "test the WDL size() builtin"
+}

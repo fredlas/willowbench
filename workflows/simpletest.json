@@ -1,0 +1,6 @@
+{
+    "name": "simpletest",
+    "filter_string": "aaaa",
+    "display_group": "Test Workflows",
+    "description": "A minimal test of a 3-task workflow. Capitalizes and reverses a text file."
+}
